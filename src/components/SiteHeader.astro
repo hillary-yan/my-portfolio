@@ -1,0 +1,41 @@
+---
+interface Props {
+  name?: string;
+  tagline?: string;
+  avatarText?: string;
+  links?: { label: string; href: string }[];
+  contentInsetClass?: string;
+}
+
+const {
+  name = 'Your Name',
+  tagline = 'Interactive Media Designer in Toronto',
+  avatarText = 'GN',
+  contentInsetClass = 'pl-[1.7rem]',
+  links = [
+    { label: 'About', href: '/#about' },
+    { label: 'Contact', href: '/#contact' },
+  ],
+} = Astro.props;
+---
+
+<header class="pt-10 md:pt-16 mb-10">
+  <div class={`flex items-center gap-4 mb-6 ${contentInsetClass}`}>
+    <div class="h-10 w-10 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center select-none">
+      <span class="text-sm font-medium text-gray-600">{avatarText}</span>
+    </div>
+    <div class="leading-tight">
+      <p class="text-sm font-medium text-gray-900">{name}</p>
+      <p class="text-xs text-gray-500">{tagline}</p>
+    </div>
+  </div>
+
+<nav class={`flex gap-6 text-xs text-gray-500 ${contentInsetClass}`}>
+    {links.map((l) => (
+      <a href={l.href} class="hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded-sm">
+        {l.label}
+      </a>
+    ))}
+  </nav>
+</header>
+

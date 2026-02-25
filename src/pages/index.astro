@@ -1,32 +1,127 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+
+const projects = [
+  {
+    title: 'Project One',
+    slug: 'project-one',
+    meta: '2024 – Product · Interaction design',
+    previewSrc: '/previews/project-one.svg',
+    previewAlt: 'Preview for Project One',
+  },
+  {
+    title: 'Project Two',
+    slug: 'project-two',
+    meta: '2023 – iOS and macOS app icons',
+    previewSrc: '/previews/project-two.svg',
+    previewAlt: 'Preview for Project Two',
+  },
+  {
+    title: 'Project Three',
+    slug: 'project-three',
+    meta: '2022 – Visual and interaction design',
+    previewSrc: '/previews/project-three.svg',
+    previewAlt: 'Preview for Project Three',
+  },
+] as const;
 ---
 
-<BaseLayout title="Home - Designer Portfolio">
-  <div class="pt-16">
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div class="text-center">
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          Minimal Design
-        </h1>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-          Focused on clean, elegant design solutions
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="/work"
-            class="inline-block px-8 py-3 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-800 transition-colors"
-          >
-            View Work
-          </a>
-          <a
-            href="/contact"
-            class="inline-block px-8 py-3 bg-white text-gray-900 border-2 border-gray-900 font-medium rounded-md hover:bg-gray-50 transition-colors"
-          >
-            Contact Me
-          </a>
+<BaseLayout title="Multidisciplinary Designer – Toronto" showNav={false}>
+  <div class="min-h-screen">
+    <section class="w-full max-w-xl mx-auto px-6 pb-24">
+      <SiteHeader />
+
+      <div class="relative">
+        <!-- Projects list (pill/button style) -->
+        <section aria-label="Selected work" class="mt-10 space-y-3" id="projects">
+          {projects.map((p) => (
+            <div class="block">
+              <a
+                href={`/projects/${p.slug}`}
+                class="group inline-flex max-w-full
+                       px-[1.7rem] py-[0.7em]
+                       rounded-[0.5em]
+                       bg-[#f8f7f1]
+                       border border-[#f8f7f1]
+                       text-[18px] text-[#1b222b]
+                       cursor-pointer
+                       shadow-[6px_6px_12px_rgba(0,0,0,0.06),-6px_-6px_12px_#ffffff]
+                       transition-all duration-300
+                       hover:text-[#666666]
+                       hover:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.06),inset_-4px_-4px_12px_#ffffff]
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
+                data-preview-src={p.previewSrc}
+                data-preview-alt={p.previewAlt}
+              >
+                <div class="flex flex-col leading-snug text-left">
+                  <span class="text-[15px] font-medium text-[#1b222b]">{p.title}</span>
+                  <span class="mt-0.5 text-[12px] text-[#1b222b]/80">{p.meta}</span>
+                </div>
+              </a>
+            </div>
+          ))}
+        </section>
+
+        <!-- Desktop hover preview: only visible while hovering/focusing a project -->
+        <div
+          id="hover-preview"
+          class="hidden lg:block absolute top-4 left-full ml-8 opacity-0 scale-95 pointer-events-none transition duration-150"
+          aria-hidden="true"
+        >
+          <div class="w-[280px] aspect-[9/16] rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+            <img
+              id="project-preview"
+              src=""
+              alt=""
+              class="h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
         </div>
       </div>
     </section>
   </div>
 </BaseLayout>
+
+<script>
+  const previewWrap = document.getElementById('hover-preview');
+  const previewEl = document.getElementById('project-preview');
+  const list = document.getElementById('projects');
+
+  if (previewWrap && previewEl && list) {
+    const links = list.querySelectorAll('a[data-preview-src]');
+
+    const show = () => {
+      previewWrap.classList.remove('opacity-0', 'scale-95');
+      previewWrap.classList.add('opacity-100', 'scale-100');
+    };
+
+    const hide = () => {
+      previewWrap.classList.add('opacity-0', 'scale-95');
+      previewWrap.classList.remove('opacity-100', 'scale-100');
+      previewEl.setAttribute('src', '');
+      previewEl.setAttribute('alt', '');
+    };
+
+    const setPreviewFrom = (el) => {
+      const src = el.getAttribute('data-preview-src');
+      const alt = el.getAttribute('data-preview-alt') || 'Project preview';
+      if (!src) return;
+      previewEl.setAttribute('src', src);
+      previewEl.setAttribute('alt', alt);
+      show();
+    };
+
+    links.forEach((el) => {
+      el.addEventListener('mouseenter', () => setPreviewFrom(el));
+      el.addEventListener('focus', () => setPreviewFrom(el));
+    });
+
+    list.addEventListener('mouseleave', hide);
+    list.addEventListener('focusout', (e) => {
+      if (!list.contains(e.relatedTarget)) hide();
+    });
+  }
+</script>

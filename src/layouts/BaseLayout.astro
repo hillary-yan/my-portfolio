@@ -4,9 +4,10 @@ import Navigation from '../components/Navigation.astro';
 interface Props {
   title: string;
   description?: string;
+  showNav?: boolean;
 }
 
-const { title, description = 'Designer Portfolio' } = Astro.props;
+const { title, description = 'Designer Portfolio', showNav = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,8 +20,8 @@ const { title, description = 'Designer Portfolio' } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-white text-gray-900 antialiased">
-    <Navigation />
+  <body class="min-h-screen bg-[#f8f7f1] text-gray-900 antialiased">
+    {showNav && <Navigation />}
     <main>
       <slot />
     </main>
@@ -28,7 +29,13 @@ const { title, description = 'Designer Portfolio' } = Astro.props;
 </html>
 
 <style is:global>
+  :root {
+    --rm-font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji';
+  }
+
   html {
-    font-family: system-ui, sans-serif;
+    font-family: var(--rm-font-family-primary);
   }
 </style>

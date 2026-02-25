@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+
+type Project = {
+  title: string;
+  meta: string;
+  summary: string;
+  sections: { heading: string; body: string[]; media?: { src: string; alt: string }[] }[];
+};
+
+const projects: Record<string, Project> = {
+  'project-one': {
+    title: 'Project One',
+    meta: '2024 – Product · Interaction design',
+    summary: 'A focused project exploring clarity, speed, and craft in the interface.',
+    sections: [
+      {
+        heading: 'Overview',
+        body: [
+          'This is a placeholder case study page. Replace this copy with the story behind the work: the context, constraints, and decisions.',
+          'Keep paragraphs short and skimmable—similar tone to the reference site.',
+        ],
+        media: [{ src: '/previews/project-one.svg', alt: 'Project One preview image' }],
+      },
+      {
+        heading: 'Details',
+        body: [
+          'Add what you did, for whom, and what changed. Mention your role and what you shipped.',
+          'You can mix text blocks and images to create a calm rhythm down the page.',
+        ],
+      },
+    ],
+  },
+  'project-two': {
+    title: 'Project Two',
+    meta: '2023 – iOS and macOS app icons',
+    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    sections: [
+      {
+        heading: 'Overview',
+        body: [
+          'Describe the brief and what you optimized for: clarity, constraints, platform guidelines, and aesthetics.',
+        ],
+        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+      },
+      {
+        heading: 'Process',
+        body: [
+          'Show iterations. If you have sketches or grids, add them here as images.',
+          'A few strong visuals usually beat a long wall of text.',
+        ],
+      },
+    ],
+  },
+  'project-three': {
+    title: 'Project Three',
+    meta: '2022 – Visual and interaction design',
+    summary: 'A set of visual explorations and interaction studies.',
+    sections: [
+      {
+        heading: 'Overview',
+        body: [
+          'Explain the exploration goal and how you evaluated outcomes.',
+        ],
+        media: [{ src: '/previews/project-three.svg', alt: 'Project Three preview image' }],
+      },
+      {
+        heading: 'Outcome',
+        body: [
+          'Summarize what you learned and what you would do next.',
+        ],
+      },
+    ],
+  },
+};
+
+const slug = Astro.params.slug as string;
+const project = projects[slug];
+
+if (!project) {
+  Astro.response.status = 404;
+}
+---
+
+<BaseLayout title={project ? `${project.title} – Portfolio` : 'Not found – Portfolio'} showNav={false}>
+  <div class="min-h-screen">
+    <section class="w-full max-w-xl mx-auto px-6 pb-24">
+      <SiteHeader />
+
+      {project ? (
+        <main>
+          <div class="mt-2">
+            <a href="/" class="text-xs text-gray-500 hover:text-gray-900">← Back</a>
+          </div>
+
+          <header class="mt-8">
+            <h1 class="text-sm font-medium text-gray-900">{project.title}</h1>
+            <p class="mt-2 text-xs text-gray-500">{project.meta}</p>
+            <p class="mt-4 text-sm text-gray-700 leading-6">{project.summary}</p>
+          </header>
+
+          <div class="mt-10 space-y-12">
+            {project.sections.map((s) => (
+              <section class="space-y-4">
+                <h2 class="text-xs tracking-[0.18em] uppercase text-gray-500">{s.heading}</h2>
+                <div class="space-y-3">
+                  {s.body.map((p) => (
+                    <p class="text-sm text-gray-800 leading-6">{p}</p>
+                  ))}
+                </div>
+
+                {s.media && (
+                  <div class="space-y-4 pt-2">
+                    {s.media.map((m) => (
+                      <figure class="rounded-2xl border border-gray-200 bg-white overflow-hidden">
+                        <img src={m.src} alt={m.alt} class="w-full h-auto block" loading="lazy" decoding="async" />
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </section>
+            ))}
+          </div>
+        </main>
+      ) : (
+        <div>
+          <p class="text-sm text-gray-700">Project not found.</p>
+          <a href="/" class="text-sm underline underline-offset-4">Go home</a>
+        </div>
+      )}
+    </section>
+  </div>
+</BaseLayout>
+
