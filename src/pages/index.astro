@@ -4,30 +4,51 @@ import SiteHeader from '../components/SiteHeader.astro';
 
 const projects = [
   {
-    title: 'Project One',
-    slug: 'project-one',
-    meta: '2024 – Product · Interaction design',
+    title: 'From Brand to Browser: Dubai NLI Design',
+    slug: 'From Brand to Browser: Dubai NLI Design',
+    meta: '2025 – Design System',
     previewSrc: '/previews/project-one.svg',
     previewAlt: 'Preview for Project One',
   },
   {
-    title: 'Project Two',
+    title: 'CMU Marketing',
     slug: 'project-two',
     meta: '2023 – iOS and macOS app icons',
     previewSrc: '/previews/project-two.svg',
     previewAlt: 'Preview for Project Two',
   },
   {
-    title: 'Project Three',
+    title: '3d Design',
     slug: 'project-three',
     meta: '2022 – Visual and interaction design',
     previewSrc: '/previews/project-three.svg',
     previewAlt: 'Preview for Project Three',
   },
+  {
+    title: 'QBP and Motex Website and Brand Design',
+    slug: 'project-four',
+    meta: '2022 – Visual and interaction design',
+    previewSrc: '/previews/project-four.svg',
+    previewAlt: 'Preview for Project Four',
+  },
+  {
+    title: 'Golf Canada',
+    slug: 'project-five',
+    meta: '2022 – Visual and interaction design',
+    previewSrc: '/previews/project-four.svg',
+    previewAlt: 'Preview for Project Four',
+  },
+    {
+    title: 'T&T Supermarket',
+    slug: 'project-five',
+    meta: '2022 – Visual and interaction design',
+    previewSrc: '/previews/project-four.svg',
+    previewAlt: 'Preview for Project Four',
+  },
 ] as const;
 ---
 
-<BaseLayout title="Multidisciplinary Designer – Toronto" showNav={false}>
+<BaseLayout title="Interactive Media Designer – Toronto" showNav={false}>
   <div class="min-h-screen">
     <section class="w-full max-w-xl mx-auto px-6 pb-24">
       <SiteHeader />
@@ -55,8 +76,8 @@ const projects = [
                 data-preview-alt={p.previewAlt}
               >
                 <div class="flex flex-col leading-snug text-left">
-                  <span class="text-[15px] font-medium text-[#1b222b]">{p.title}</span>
-                  <span class="mt-0.5 text-[12px] text-[#1b222b]/80">{p.meta}</span>
+                  <span class="text-[15px] font-medium text-[#1b222b] font-title">{p.title}</span>
+                  <span class="mt-0.5 text-[12px] text-[#1b222b]/80 font-body">{p.meta}</span>
                 </div>
               </a>
             </div>
