@@ -7,43 +7,43 @@ const projects = [
     title: 'From Brand to Browser: Dubai NLI Design',
     slug: 'From Brand to Browser: Dubai NLI Design',
     meta: '2025 – Design System',
-    previewSrc: '/previews/project-one.svg',
+    previewSrc: '/previews/project-one.mp4',
     previewAlt: 'Preview for Project One',
   },
   {
-    title: 'CMU Marketing',
+    title: 'CMU and NUS Branding and Marketing',
     slug: 'project-two',
-    meta: '2023 – iOS and macOS app icons',
-    previewSrc: '/previews/project-two.svg',
+    meta: '2023 – Brand and Marketing',
+    previewSrc: '/previews/project-two.mp4',
     previewAlt: 'Preview for Project Two',
   },
   {
-    title: '3d Design',
+    title: '3D Design',
     slug: 'project-three',
-    meta: '2022 – Visual and interaction design',
-    previewSrc: '/previews/project-three.svg',
+    meta: '2022 – Visual design',
+    previewSrc: '/previews/720x480_demoreel_homepage.mp4',
     previewAlt: 'Preview for Project Three',
   },
   {
-    title: 'QBP and Motex Website and Brand Design',
+    title: 'QBP and Motex Website Ebay and Brand Design',
     slug: 'project-four',
-    meta: '2022 – Visual and interaction design',
-    previewSrc: '/previews/project-four.svg',
+    meta: '2021 – Visual and Website design',
+    previewSrc: '/previews/project-four.mp4',
     previewAlt: 'Preview for Project Four',
   },
   {
     title: 'Golf Canada',
     slug: 'project-five',
-    meta: '2022 – Visual and interaction design',
-    previewSrc: '/previews/project-four.svg',
-    previewAlt: 'Preview for Project Four',
+    meta: '2020 – Visual and interaction design',
+    previewSrc: '/previews/project-five.mp4',
+    previewAlt: 'Preview for Project Five',
   },
-    {
+  {
     title: 'T&T Supermarket',
-    slug: 'project-five',
-    meta: '2022 – Visual and interaction design',
-    previewSrc: '/previews/project-four.svg',
-    previewAlt: 'Preview for Project Four',
+    slug: 'project-six',
+    meta: '2018 – Visual and UI design',
+    previewSrc: '/previews/project-six.mp4',
+    previewAlt: 'Preview for Project Six',
   },
 ] as const;
 ---
@@ -53,7 +53,8 @@ const projects = [
     <section class="w-full max-w-xl mx-auto px-6 pb-24">
       <SiteHeader />
 
-      <div class="relative">
+      <!-- w-fit so preview left-full ml-8 is exactly 32px from list right edge -->
+      <div class="relative w-fit max-w-full">
         <!-- Projects list (pill/button style) -->
         <section aria-label="Selected work" class="mt-10 space-y-3" id="projects">
           {projects.map((p) => (
@@ -61,43 +62,44 @@ const projects = [
               <a
                 href={`/projects/${p.slug}`}
                 class="group inline-flex max-w-full
-                       px-[1.7rem] py-[0.7em]
-                       rounded-[0.5em]
+                       px-[1.35rem] py-[0.55em]
+                       rounded-[0.4em]
                        bg-[#f8f7f1]
                        border border-[#f8f7f1]
-                       text-[18px] text-[#1b222b]
+                       text-[14px] text-[#1b222b]
                        cursor-pointer
-                       shadow-[6px_6px_12px_rgba(0,0,0,0.06),-6px_-6px_12px_#ffffff]
+                       shadow-[5px_5px_10px_rgba(0,0,0,0.06),-5px_-5px_10px_#ffffff]
                        transition-all duration-300
                        hover:text-[#666666]
-                       hover:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.06),inset_-4px_-4px_12px_#ffffff]
+                       hover:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.06),inset_-3px_-3px_10px_#ffffff]
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
                 data-preview-src={p.previewSrc}
                 data-preview-alt={p.previewAlt}
               >
                 <div class="flex flex-col leading-snug text-left">
-                  <span class="text-[15px] font-medium text-[#1b222b] font-title">{p.title}</span>
-                  <span class="mt-0.5 text-[12px] text-[#1b222b]/80 font-body">{p.meta}</span>
+                  <span class="text-sm font-medium text-[#1b222b] font-title">{p.title}</span>
+                  <span class="mt-0.5 text-xs text-[#1b222b]/80 font-body">{p.meta}</span>
                 </div>
               </a>
             </div>
           ))}
         </section>
 
-        <!-- Desktop hover preview: only visible while hovering/focusing a project -->
+        <!-- Desktop hover preview: right of list, exactly 32px gap (ml-8) -->
         <div
           id="hover-preview"
-          class="hidden lg:block absolute top-4 left-full ml-8 opacity-0 scale-95 pointer-events-none transition duration-150"
+          class="hidden lg:block absolute top-0 left-full ml-8 opacity-0 scale-95 pointer-events-none transition duration-150 max-h-[calc(100vh-3rem)]"
+          style="max-width: min(420px, calc(100vw - var(--preview-left, 0px) - 24px));"
           aria-hidden="true"
         >
-          <div class="w-[280px] aspect-[9/16] rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-            <img
-              id="project-preview"
-              src=""
-              alt=""
-              class="h-full w-full object-cover"
-              loading="eager"
-              decoding="async"
+          <div id="hover-preview-inner" class="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm w-full h-full">
+            <video
+              id="project-preview-video"
+              class="block w-full h-full object-contain"
+              muted
+              loop
+              playsinline
+              preload="metadata"
             />
           </div>
         </div>
@@ -108,10 +110,32 @@ const projects = [
 
 <script>
   const previewWrap = document.getElementById('hover-preview');
-  const previewEl = document.getElementById('project-preview');
+  const previewInner = document.getElementById('hover-preview-inner');
+  const previewVideo = document.getElementById('project-preview-video');
   const list = document.getElementById('projects');
 
-  if (previewWrap && previewEl && list) {
+  const getMaxHeight = () => (typeof window !== 'undefined' ? window.innerHeight - 48 : 600);
+
+  function sizePreviewToVideo() {
+    const v = previewVideo;
+    const w = v.videoWidth;
+    const h = v.videoHeight;
+    if (!w || !h || !previewInner) return;
+    // Preview starts at listWrap.right + 32px; leave 24px viewport padding on right
+    const listWrap = list.parentElement;
+    const listRight = listWrap ? listWrap.getBoundingClientRect().right : 0;
+    const availableW = Math.max(120, window.innerWidth - listRight - 32 - 24);
+    const maxW = Math.min(480, availableW);
+    const maxH = getMaxHeight();
+    const aspect = w / h;
+    // Largest size that fits maxW/maxH and keeps video aspect ratio
+    const width = Math.min(maxW, maxH * aspect);
+    const height = width / aspect;
+    previewInner.style.width = `${Math.round(width)}px`;
+    previewInner.style.height = `${Math.round(height)}px`;
+  }
+
+  if (previewWrap && previewInner && previewVideo && list) {
     const links = list.querySelectorAll('a[data-preview-src]');
 
     const show = () => {
@@ -122,17 +146,26 @@ const projects = [
     const hide = () => {
       previewWrap.classList.add('opacity-0', 'scale-95');
       previewWrap.classList.remove('opacity-100', 'scale-100');
-      previewEl.setAttribute('src', '');
-      previewEl.setAttribute('alt', '');
+      previewVideo.src = '';
+      previewVideo.pause();
+      previewInner.removeAttribute('style');
     };
 
     const setPreviewFrom = (el) => {
       const src = el.getAttribute('data-preview-src');
-      const alt = el.getAttribute('data-preview-alt') || 'Project preview';
       if (!src) return;
-      previewEl.setAttribute('src', src);
-      previewEl.setAttribute('alt', alt);
-      show();
+      previewVideo.src = src;
+      previewVideo.load();
+      previewVideo.onloadedmetadata = () => {
+        sizePreviewToVideo();
+        show();
+      };
+      // If metadata already cached, size immediately
+      if (previewVideo.readyState >= 1) {
+        sizePreviewToVideo();
+        show();
+      }
+      previewVideo.play().catch(() => {});
     };
 
     links.forEach((el) => {

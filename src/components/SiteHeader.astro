@@ -8,9 +8,9 @@ interface Props {
 }
 
 const {
-  name = 'Your Name',
+  name = 'Ge Yan',
   tagline = 'Interactive Media Designer in Toronto',
-  avatarText = 'GN',
+  avatarImage = '/ge.svg',
   contentInsetClass = 'pl-[1.7rem]',
   links = [
     { label: 'About', href: '/#about' },
@@ -21,8 +21,14 @@ const {
 
 <header class="pt-10 md:pt-16 mb-10">
   <div class={`flex items-center gap-4 mb-6 ${contentInsetClass}`}>
-    <div class="h-10 w-10 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center select-none">
-      <span class="text-sm font-medium text-gray-600 font-title">{avatarText}</span>
+    <div class="h-10 w-10 rounded-full flex items-center justify-center select-none">
+      <a href="/">
+  <img
+    src={avatarImage}
+    alt={name}
+    class="w-10 h-10 rounded-full object-cover"
+  />
+</a>
     </div>
     <div class="leading-tight">
       <p class="text-sm font-medium text-gray-900 font-title">{name}</p>
