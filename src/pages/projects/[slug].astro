@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 
+// 1. 先定义类型
 type Project = {
   title: string;
   meta: string;
@@ -9,6 +10,7 @@ type Project = {
   sections: { heading: string; body: string[]; media?: { src: string; alt: string }[] }[];
 };
 
+// 2. 定义数据对象 (放在最外层，方便函数内外都能用)
 const projects: Record<string, Project> = {
   'project-one': {
     title: 'Project One',
@@ -19,16 +21,8 @@ const projects: Record<string, Project> = {
         heading: 'Overview',
         body: [
           'This is a placeholder case study page. Replace this copy with the story behind the work: the context, constraints, and decisions.',
-          'Keep paragraphs short and skimmable—similar tone to the reference site.',
         ],
         media: [{ src: '/previews/project-one.svg', alt: 'Project One preview image' }],
-      },
-      {
-        heading: 'Details',
-        body: [
-          'Add what you did, for whom, and what changed. Mention your role and what you shipped.',
-          'You can mix text blocks and images to create a calm rhythm down the page.',
-        ],
       },
     ],
   },
@@ -39,17 +33,8 @@ const projects: Record<string, Project> = {
     sections: [
       {
         heading: 'Overview',
-        body: [
-          'Describe the brief and what you optimized for: clarity, constraints, platform guidelines, and aesthetics.',
-        ],
+        body: ['Describe the brief and what you optimized for.'],
         media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
-      },
-      {
-        heading: 'Process',
-        body: [
-          'Show iterations. If you have sketches or grids, add them here as images.',
-          'A few strong visuals usually beat a long wall of text.',
-        ],
       },
     ],
   },
@@ -60,24 +45,25 @@ const projects: Record<string, Project> = {
     sections: [
       {
         heading: 'Overview',
-        body: [
-          'Explain the exploration goal and how you evaluated outcomes.',
-        ],
+        body: ['Explain the exploration goal and how you evaluated outcomes.'],
         media: [{ src: '/previews/project-three.svg', alt: 'Project Three preview image' }],
-      },
-      {
-        heading: 'Outcome',
-        body: [
-          'Summarize what you learned and what you would do next.',
-        ],
       },
     ],
   },
 };
 
-const slug = Astro.params.slug as string;
-const project = projects[slug];
+// 3. Astro 静态路径函数
+export async function getStaticPaths() {
+  // 直接根据上面定义的 projects 的 key 生成路径
+  const projectKeys = ['project-one', 'project-two', 'project-three']; 
+  return projectKeys.map((slug) => ({ params: { slug } }));
+}
 
+// 4. 获取当前页面的数据
+const { slug } = Astro.params;
+const project = projects[slug as string];
+
+// 如果找不到项目，返回 404 状态
 if (!project) {
   Astro.response.status = 404;
 }
@@ -132,4 +118,3 @@ if (!project) {
     </section>
   </div>
 </BaseLayout>
-
