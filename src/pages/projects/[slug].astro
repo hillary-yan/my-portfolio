@@ -3,26 +3,118 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 
 // 1. 先定义类型
+type SummaryPart = { text: string; href?: string };
 type Project = {
   title: string;
   meta: string;
-  summary: string;
-  sections: { heading: string; body: string[]; media?: { src: string; alt: string }[] }[];
+  /** 整段纯文字，或「文本片段 + 可选链接」拼成一段 */
+  summary: string | SummaryPart[];
+  sections: {
+    heading: string;
+    body: string[];
+    media?: { type?: 'image' | 'video'; src: string; alt: string; borderless?: boolean }[];
+  }[];
 };
 
 // 2. 定义数据对象 (放在最外层，方便函数内外都能用)
 const projects: Record<string, Project> = {
   'project-one': {
-    title: 'Project One',
-    meta: '2024 – Product · Interaction design',
-    summary: 'A focused project exploring clarity, speed, and craft in the interface.',
-    sections: [
+    title: 'From Brand to Browser: A Cross-Platform Design System for NLIT in Dubai',
+    meta: '2025 – Design System',
+    summary: [
+      { text: 'In ' },
       {
-        heading: 'Overview',
-        body: [
-          'This is a placeholder case study page. Replace this copy with the story behind the work: the context, constraints, and decisions.',
+        text: 'The North Land Institute of Training x George Brown Polytechnic',
+        href: 'https://www.georgebrown.ca/the-north-land-institute-of-training',
+      },
+      {
+        text: ` partnership for the Dubai market, I spearheaded the brand’s visual storytelling by developing a comprehensive design suite. From the core logo and color systems to international recruitment brochures and social media templates, my work standardized the visual language to maintain credibility and aesthetic excellence throughout the institution's cross-border expansion.`,
+      },
+    ],
+    sections: [
+      // 第一个对象：Logo
+      {
+        heading: 'Logo',
+        body: [''],
+        media: [{ 
+          src: '/previews/NLIT logo.svg', 
+          alt: 'Social Media preview' 
+          },
+        { 
+      src: '/previews/NLIT Type.svg', 
+      alt: 'Logo', 
+    }, 
+    { 
+      src: '/previews/NLIT color.svg', 
+      alt: 'Logo', 
+    }, 
         ],
-        media: [{ src: '/previews/project-one.svg', alt: 'Project One preview image' }],
+      },
+     // 第二个对象：Brochure Part 1
+{
+  heading: 'Brochure',
+  body: [
+    'Latest Update:',
+    'Visual Elevation: Intentional Realism',
+    '• Left: Initial AI-generated draft focusing on composition.',
+    '• Right: Optimized version using a refined AI toolset.',
+    'By fine-tuning prompts and leveraging specialized generative tools, I enhanced the realism and emotional resonance of the subject, ensuring the visual narrative feels organic and sophisticated.'
+  ],
+  media: [
+    { 
+      src: '/previews/NL4@2x.jpg', 
+      alt: 'Brochure preview', 
+      borderless: true 
+    }
+  ],
+},
+    
+// 新增：Brochure Part 2 (插入在 NL4 和 NL5 之间)
+{
+  heading: '', // 如果不需要重复显示标题，可以留空
+  body: [
+    'In response to the education industry\'s need for both authority and results, I built a standardized design system that maximized efficiency for international localized updates. Here is a look at the full page layouts:',
+  ],
+  media: [
+    { 
+      src: '/previews/NL5@2x.png', 
+      alt: 'Brochure back cover', 
+      borderless: true 
+    },
+    { 
+      src: '/previews/NL6@2x.png', 
+      alt: 'Brochure preview', 
+      borderless: true 
+    },
+    { 
+      src: '/previews/NL7@2x.png', 
+      alt: 'Brochure preview', 
+      borderless: true 
+    },
+    { 
+      src: '/previews/NL8@2x.png', 
+      alt: 'Brochure preview', 
+      borderless: true 
+    },
+  ],
+}, 
+      // 注意这里的逗号，这是第三个对象：Marketing
+      {
+        heading: 'Marketing',
+        body: [''],
+        media: [{ src: '/previews/NLIT social media.jpg', alt: 'Social Media preview' 
+        },
+     { 
+      src: '/previews/60b6c5a1-964e-4b95-af1b-19249aca185c.png', 
+      alt: 'Staff Card', 
+      borderless: true 
+    }, 
+    { 
+      src: '/previews/Campus.png', 
+      alt: 'Staff Card', 
+      borderless: true 
+    }, 
+        ],
       },
     ],
   },
@@ -39,17 +131,17 @@ const projects: Record<string, Project> = {
     ],
   },
   'project-three': {
-    title: 'Project Three',
-    meta: '2022 – Visual and interaction design',
-    summary: 'A set of visual explorations and interaction studies.',
-    sections: [
-      {
-        heading: 'Overview',
-        body: ['Explain the exploration goal and how you evaluated outcomes.'],
-        media: [{ src: '/previews/project-three.svg', alt: 'Project Three preview image' }],
-      },
-    ],
-  },
+  title: '3D Design',
+  meta: '2022 – 3D modeling surfacing and animation',
+  summary: 'Driven by a commitment to lifelong learning, I spent 1 year upskilling in 3D modeling and surfacing. This is the demo reel I produced during that period. With the ability to independently execute everything from asset creation to lighting and animation, I can now offer clients enhanced value—whether it is crafting 3D icons, producing social media content, or quality-controlling AI-generated motion.',
+  sections: [
+    {
+
+      body: [''],
+      media: [{ type: 'video', src: '/previews/website demoreel.mp4', alt: 'Project website demoreel' }],
+    },
+  ],
+},
 };
 
 // 3. Astro 静态路径函数
@@ -67,6 +159,26 @@ const project = projects[slug as string];
 if (!project) {
   Astro.response.status = 404;
 }
+
+/** 分段 summary 用 HTML 输出（避免 .map 里混合字符串与标签时被序列化成 [object Object]） */
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function summaryPartsToHtml(parts: SummaryPart[]): string {
+  const linkClass = 'underline underline-offset-2 text-gray-900 hover:text-gray-600';
+  return parts
+    .map((p) =>
+      p.href
+        ? `<a href="${escapeHtml(p.href)}" class="${linkClass}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.text)}</a>`
+        : escapeHtml(p.text),
+    )
+    .join('');
+}
 ---
 
 <BaseLayout title={project ? `${project.title} – Portfolio` : 'Not found – Portfolio'} showNav={false}>
@@ -83,7 +195,11 @@ if (!project) {
           <header class="mt-8">
             <h1 class="text-sm font-medium text-gray-900">{project.title}</h1>
             <p class="mt-2 text-xs text-gray-500">{project.meta}</p>
-            <p class="mt-4 text-sm text-gray-700 leading-6">{project.summary}</p>
+            {typeof project.summary === 'string' ? (
+              <p class="mt-4 text-sm text-gray-700 leading-6">{project.summary}</p>
+            ) : (
+              <p class="mt-4 text-sm text-gray-700 leading-6" set:html={summaryPartsToHtml(project.summary)} />
+            )}
           </header>
 
           <div class="mt-10 space-y-12">
@@ -97,14 +213,36 @@ if (!project) {
                 </div>
 
                 {s.media && (
-                  <div class="space-y-4 pt-2">
-                    {s.media.map((m) => (
-                      <figure class="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-                        <img src={m.src} alt={m.alt} class="w-full h-auto block" loading="lazy" decoding="async" />
-                      </figure>
-                    ))}
-                  </div>
-                )}
+  <div class="space-y-4 pt-2">
+    {s.media.map((m) => (
+      <figure
+        class:list={[
+          'rounded-2xl bg-white overflow-hidden',
+          { 'border border-gray-200': !m.borderless },
+        ]}
+      >
+        {m.type === 'video' ? (
+          <video
+            src={m.src}
+            class="w-full h-auto block"
+            controls
+            preload="metadata"
+          >
+            Sorry, your browser doesn’t support embedded videos.
+          </video>
+        ) : (
+          <img
+            src={m.src}
+            alt={m.alt}
+            class="w-full h-auto block"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+      </figure>
+    ))}
+  </div>
+)}
               </section>
             ))}
           </div>

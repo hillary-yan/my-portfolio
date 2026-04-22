@@ -5,16 +5,17 @@ import SiteHeader from '../components/SiteHeader.astro';
 const projects = [
   {
     title: 'From Brand to Browser: Dubai NLI Design',
-    slug: 'From Brand to Browser: Dubai NLI Design',
-    meta: '2025 – Design System',
-    previewSrc: '/previews/project-one.mp4',
+    slug: 'project-one',
+    meta: '2025 – Go to Market and Digital Design',
+    previewSrc: '/previews/nl preview.mp4',
     previewAlt: 'Preview for Project One',
+    previewScale: 0.68,
   },
   {
-    title: 'CMU and NUS Branding and Marketing',
+    title: 'Northern College at Pures, CMU and NUS Branding and Marketing',
     slug: 'project-two',
     meta: '2023 – Brand and Marketing',
-    previewSrc: '/previews/project-two.mp4',
+    previewSrc: '/previews/Pures Brand Book.mp4',
     previewAlt: 'Preview for Project Two',
   },
   {
@@ -25,7 +26,7 @@ const projects = [
     previewAlt: 'Preview for Project Three',
   },
   {
-    title: 'QBP and Motex Website Ebay and Brand Design',
+    title: 'QBP International and Motex Website Ebay and Brand Design',
     slug: 'project-four',
     meta: '2021 – Visual and Website design',
     previewSrc: '/previews/project-four.mp4',
@@ -75,6 +76,7 @@ const projects = [
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
                 data-preview-src={p.previewSrc}
                 data-preview-alt={p.previewAlt}
+                data-preview-scale={p.previewScale ?? 1}
               >
                 <div class="flex flex-col leading-snug text-left">
                   <span class="text-sm font-medium text-[#1b222b] font-title">{p.title}</span>
@@ -116,7 +118,7 @@ const projects = [
 
   const getMaxHeight = () => (typeof window !== 'undefined' ? window.innerHeight - 48 : 600);
 
-  function sizePreviewToVideo() {
+  function sizePreviewToVideo(scale = 1) {
     const v = previewVideo;
     const w = v.videoWidth;
     const h = v.videoHeight;
@@ -129,7 +131,7 @@ const projects = [
     const maxH = getMaxHeight();
     const aspect = w / h;
     // Largest size that fits maxW/maxH and keeps video aspect ratio
-    const width = Math.min(maxW, maxH * aspect);
+    const width = Math.min(maxW, maxH * aspect) * scale;
     const height = width / aspect;
     previewInner.style.width = `${Math.round(width)}px`;
     previewInner.style.height = `${Math.round(height)}px`;
@@ -153,16 +155,17 @@ const projects = [
 
     const setPreviewFrom = (el) => {
       const src = el.getAttribute('data-preview-src');
+      const scale = Number(el.getAttribute('data-preview-scale') || '1');
       if (!src) return;
       previewVideo.src = src;
       previewVideo.load();
       previewVideo.onloadedmetadata = () => {
-        sizePreviewToVideo();
+        sizePreviewToVideo(scale);
         show();
       };
       // If metadata already cached, size immediately
       if (previewVideo.readyState >= 1) {
-        sizePreviewToVideo();
+        sizePreviewToVideo(scale);
         show();
       }
       previewVideo.play().catch(() => {});
