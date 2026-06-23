@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+---
+
+<BaseLayout title="Contact – Ge Yan" showNav={false}>
+  <div class="min-h-screen">
+    <section class="w-full max-w-xl mx-auto px-6 pb-24">
+      <SiteHeader />
+
+      <main class="pl-[1.7rem]">
+        <p class="text-sm text-gray-700 leading-6 font-body">
+          Interested in working together? Feel free to reach out.
+        </p>
+
+        <ul class="mt-6 space-y-3">
+          <li>
+            <a
+              href="mailto:yangechifan@gmail.com"
+              class="text-sm text-gray-700 hover:text-gray-900 font-body focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded-sm"
+            >
+              yangechifan@gmail.com
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/ge-yan-08216a133/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-gray-700 hover:text-gray-900 font-body focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded-sm"
+            >
+              LinkedIn
+            </a>
+          </li>
+        </ul>
+      </main>
+    </section>
+  </div>
+</BaseLayout>

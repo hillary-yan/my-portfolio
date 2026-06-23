@@ -3,6 +3,7 @@ interface Props {
   name?: string;
   tagline?: string;
   avatarText?: string;
+  avatarImage?: string;
   links?: { label: string; href: string }[];
   contentInsetClass?: string;
 }
@@ -13,22 +14,22 @@ const {
   avatarImage = '/ge.svg',
   contentInsetClass = 'pl-[1.7rem]',
   links = [
-    { label: 'About', href: '/#about' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
   ],
 } = Astro.props;
 ---
 
 <header class="pt-10 md:pt-16 mb-10">
   <div class={`flex items-center gap-4 mb-6 ${contentInsetClass}`}>
-    <div class="h-10 w-10 rounded-full flex items-center justify-center select-none">
+    <div class="h-10 w-10 rounded-full flex items-center justify-center select-none overflow-hidden">
       <a href="/">
-  <img
-    src={avatarImage}
-    alt={name}
-    class="w-10 h-10 rounded-full object-cover"
-  />
-</a>
+        <img
+          src={avatarImage}
+          alt={name}
+          class="w-10 h-10 rounded-full object-cover object-center"
+        />
+      </a>
     </div>
     <div class="leading-tight">
       <p class="text-sm font-medium text-gray-900 font-title">{name}</p>
@@ -36,7 +37,7 @@ const {
     </div>
   </div>
 
-<nav class={`flex gap-6 text-xs text-gray-500 ${contentInsetClass}`}>
+  <nav class={`flex gap-6 text-xs text-gray-500 ${contentInsetClass}`}>
     {links.map((l) => (
       <a href={l.href} class="hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded-sm">
         {l.label}
@@ -44,4 +45,3 @@ const {
     ))}
   </nav>
 </header>
-
