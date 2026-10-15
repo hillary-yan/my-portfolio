@@ -130,6 +130,42 @@ const projects: Record<string, Project> = {
       },
     ],
   },
+  'project-four': {
+    title: 'QBP International and Motex Website Ebay and Brand Design',
+    meta: '2021 – Visual and Website design',
+    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    sections: [
+      {
+        heading: 'Overview',
+        body: ['Describe the brief and what you optimized for.'],
+        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+      },
+    ],
+  },
+  'project-five': {
+    title: "Young People's Theatre Website Tickets Purchase Process UX/UI Design",
+    meta: '2020 – Visual and interaction design',
+    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    sections: [
+      {
+        heading: 'Overview',
+        body: ['Describe the brief and what you optimized for.'],
+        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+      },
+    ],
+  },
+  'project-six': {
+    title: 'Want more?',
+    meta: 'More work from differnt comapnies',
+    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    sections: [
+      {
+        heading: 'Overview',
+        body: ['Describe the brief and what you optimized for.'],
+        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+      },
+    ],
+  },
   'project-three': {
   title: '3D Design',
   meta: '2022 – 3D modeling surfacing and animation',
@@ -147,7 +183,7 @@ const projects: Record<string, Project> = {
 // 3. Astro 静态路径函数
 export async function getStaticPaths() {
   // 直接根据上面定义的 projects 的 key 生成路径
-  const projectKeys = ['project-one', 'project-two', 'project-three']; 
+  const projectKeys = ['project-one', 'project-two', 'project-three', 'project-four', 'project-five', 'project-six']; 
   return projectKeys.map((slug) => ({ params: { slug } }));
 }
 
