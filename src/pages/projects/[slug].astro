@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import WorkToggles from '../../components/WorkToggles.astro';
 
 // 1. 先定义类型
 type SummaryPart = { text: string; href?: string };
+type MediaItem = { type?: 'image' | 'video'; src: string; alt: string; borderless?: boolean };
 type Project = {
   title: string;
   meta: string;
@@ -12,7 +14,13 @@ type Project = {
   sections: {
     heading: string;
     body: string[];
-    media?: { type?: 'image' | 'video'; src: string; alt: string; borderless?: boolean }[];
+    media?: MediaItem[];
+  }[];
+  /** Notion-style toggle groups (used on Want more?) */
+  toggles?: {
+    title: string;
+    body?: string[];
+    media?: MediaItem[];
   }[];
 };
 
@@ -131,39 +139,66 @@ const projects: Record<string, Project> = {
     ],
   },
   'project-four': {
-    title: 'QBP International and Motex Website Ebay and Brand Design',
-    meta: '2021 – Visual and Website design',
-    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    title: 'QBP International & Motex',
+    meta: '2020–2022 Visual & Website design',
+    summary: 'At QPP International, I worked across brand identity, packaging, and digital design for automotive products. My work included brake rotor and pad packaging, website development, eBay product pages, logo design, vehicle graphics, and product photography, creating a consistent brand presence across print and digital touchpoints.',
     sections: [
       {
         heading: 'Overview',
-        body: ['Describe the brief and what you optimized for.'],
-        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+        body: [''],
+        media: [
+          { src: '/previews/QBP_Logo.png', alt: 'QBP Logo' },
+          { type: 'video', src: '/previews/QBP.mp4', alt: 'QBP video' },
+          { type: 'video', src: '/previews/QBP Video.mp4', alt: 'QBP package video' },
+          { src: '/previews/QBP Package.png', alt: 'QBP packaging' },
+          { src: '/previews/QBP Package1.png', alt: 'QBP packaging 1' },
+          { src: '/previews/QBP Package2.png', alt: 'QBP packaging 2' },
+          { src: '/previews/QBP Package3.png', alt: 'QBP packaging 3' },
+          { src: '/previews/QBP E-Coated Rotor Poster test.png', alt: 'QBP e-coated rotor poster' },
+          { src: '/previews/QBP vehicle ads.png', alt: 'QBP vehicle ads' },
+          { src: '/previews/QBP Xmas.jpg', alt: 'QBP Christmas campaign' },
+          { src: '/previews/QBP Motex Package.png', alt: 'QBP Motex packaging' },
+          { src: '/previews/QBP Motex Label.png', alt: 'QBP Motex label' },
+          { src: '/previews/QBP Motex1.jpg', alt: 'QBP Motex 1' },
+          { src: '/previews/QBP Motex2.jpg', alt: 'QBP Motex 2' },
+          { src: '/previews/QBP Motex3.png', alt: 'QBP Motex 3' },
+          
+        ],
       },
     ],
   },
   'project-five': {
-    title: "Young People's Theatre Website Tickets Purchase Process UX/UI Design",
-    meta: '2020 – Visual and interaction design',
-    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    title: "Young People’s Theatre",
+    meta: '2018-2019 Ticket Booking Experience UX/UI Redesign',
+    summary: 'A redesign of Young People’s Theatre’s online ticket booking experience, focused on making the purchase journey clearer and easier to navigate. The project rethinks the user flow and interface to help audiences find performances, select tickets, and move through checkout with greater ease.',
     sections: [
       {
         heading: 'Overview',
-        body: ['Describe the brief and what you optimized for.'],
-        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+        body: [''],
+        media: [
+          { src: '/previews/YPT1.webp', alt: 'YPT ticket booking 1' },
+          { src: '/previews/YPT2.webp', alt: 'YPT ticket booking 2' },
+          { src: '/previews/YPT3.webp', alt: 'YPT ticket booking 3' },
+          { src: '/previews/YPT4.webp', alt: 'YPT ticket booking 4' },
+          { src: '/previews/YPT5.gif', alt: 'YPT ticket booking 5' },
+          { src: '/previews/YPT6.gif', alt: 'YPT ticket booking 6' },
+          { src: '/previews/YPT7.gif', alt: 'YPT ticket booking 7' },
+          { src: '/previews/YPT8.webp', alt: 'YPT ticket booking 8' },
+        ],
       },
     ],
   },
   'project-six': {
-    title: 'Want more?',
-    meta: 'More work from differnt comapnies',
-    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
-    sections: [
-      {
-        heading: 'Overview',
-        body: ['Describe the brief and what you optimized for.'],
-        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
-      },
+    title: 'Independent Design Work',
+    meta: 'Freelance Illustration, UI & Web Design · 2018–Present',
+    summary: 'As a freelance designer, I create illustrations, infographics, user interfaces, and websites for clients including T&T Supermarket, Golf Canada, and Fujifilm VisualSonics. Working with developers, I translate each client’s needs into clear, engaging visual and digital experiences..',
+    sections: [],
+    toggles: [
+      // Add body copy and /previews media into each toggle as work is ready
+      { title: 'Branding', body: [], media: [] },
+      { title: 'Print Design', body: [], media: [] },
+      { title: 'Digital Design', body: [], media: [] },
+      { title: 'Other Projects', body: [], media: [] },
     ],
   },
   'project-three': {
@@ -238,6 +273,11 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
             )}
           </header>
 
+          {project.toggles && project.toggles.length > 0 && (
+            <WorkToggles toggles={project.toggles} />
+          )}
+
+          {project.sections.length > 0 && (
           <div class="mt-10 space-y-12">
             {project.sections.map((s) => (
               <section class="space-y-4">
@@ -282,6 +322,7 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
               </section>
             ))}
           </div>
+          )}
         </main>
       ) : (
         <div>

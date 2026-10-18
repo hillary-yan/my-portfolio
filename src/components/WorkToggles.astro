@@ -1,0 +1,95 @@
+---
+type ToggleMedia = {
+  type?: 'image' | 'video';
+  src: string;
+  alt: string;
+  borderless?: boolean;
+};
+
+type WorkToggle = {
+  title: string;
+  body?: string[];
+  media?: ToggleMedia[];
+};
+
+interface Props {
+  toggles: WorkToggle[];
+}
+
+const { toggles } = Astro.props;
+---
+
+<div class="mt-10 space-y-0">
+  {toggles.map((t) => {
+    const paragraphs = (t.body ?? []).filter((p) => p.trim().length > 0);
+    const media = t.media ?? [];
+
+    return (
+      <details class="group work-toggle">
+        <summary class="flex items-start gap-2 cursor-pointer select-none py-2.5 min-h-11">
+          <span class="inline-flex items-center justify-center shrink-0 mt-[0.2rem] text-gray-500" aria-hidden="true">
+            <svg
+              class="size-3.5 transition-transform duration-150 ease-out group-open:rotate-90"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+            >
+              <path d="M5.5 3.2v9.6L13 8 5.5 3.2z" />
+            </svg>
+          </span>
+          <span class="text-sm text-gray-900 leading-6">{t.title}</span>
+        </summary>
+
+        <div class="pl-6 pb-4 space-y-4">
+          {paragraphs.length > 0 && (
+            <div class="space-y-3">
+              {paragraphs.map((p) => (
+                <p class="text-sm text-gray-800 leading-6">{p}</p>
+              ))}
+            </div>
+          )}
+
+          {media.length > 0 && (
+            <div class="space-y-4 pt-1">
+              {media.map((m) => (
+                <figure
+                  class:list={[
+                    'rounded-2xl bg-white overflow-hidden',
+                    { 'border border-gray-200': !m.borderless },
+                  ]}
+                >
+                  {m.type === 'video' ? (
+                    <video src={m.src} class="w-full h-auto block" controls preload="metadata">
+                      Sorry, your browser doesn’t support embedded videos.
+                    </video>
+                  ) : (
+                    <img
+                      src={m.src}
+                      alt={m.alt}
+                      class="w-full h-auto block"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </figure>
+              ))}
+            </div>
+          )}
+        </div>
+      </details>
+    );
+  })}
+</div>
+
+<style>
+  .work-toggle > summary {
+    list-style: none;
+  }
+
+  .work-toggle > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .work-toggle[open] svg {
+    transform: rotate(90deg);
+  }
+</style>
