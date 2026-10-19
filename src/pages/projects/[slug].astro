@@ -7,9 +7,11 @@ import WorkToggles from '../../components/WorkToggles.astro';
 // 1. 先定义类型
 type SummaryPart = { text: string; href?: string };
 type MediaItem = {
-  type?: 'image' | 'video' | 'iframe';
-  src: string;
-  alt: string;
+  type?: 'image' | 'video' | 'iframe' | 'text';
+  src?: string;
+  alt?: string;
+  text?: string;
+  href?: string;
   borderless?: boolean;
 };
 type ToggleMediaItem = {
@@ -53,6 +55,7 @@ Beyond creating visual assets, I support campaign planning and execution to conn
         heading: 'Brochure',
         body: [''],
         media: [
+          { src: '/previews/CMU Billboard.webp', alt: 'CMU Billboard' },
           { src: '/previews/CMU1.webp', alt: 'CMU 1' },
           { src: '/previews/CMU2.webp', alt: 'CMU 2' },
           { src: '/previews/CMU3.webp', alt: 'CMU 3' },
@@ -62,6 +65,7 @@ Beyond creating visual assets, I support campaign planning and execution to conn
           { src: '/previews/CMU7.webp', alt: 'CMU 7' },
           { src: '/previews/CMU8.webp', alt: 'CMU 8' },
           { src: '/previews/CMU9.webp', alt: 'CMU 9' },
+          
         ],
       },
       {
@@ -111,8 +115,9 @@ Beyond creating visual assets, I support campaign planning and execution to conn
           { src: '/previews/Pures3.webp', alt: 'Pures 3' },
           { src: '/previews/Pures4.webp', alt: 'Pures 4' },
           { src: '/previews/Pures5.webp', alt: 'Pures 5' },
-          { src: '/previews/Pures7.webp', alt: 'Pures 7' },
           { src: '/previews/Pures6.webp', alt: 'Pures 6' },
+          { src: '/previews/Pures7.webp', alt: 'Pures 7' },
+          { src: '/previews/Pures8.webp', alt: 'Pures 8' },
            ],
       },
       {
@@ -239,7 +244,10 @@ Beyond creating visual assets, I support campaign planning and execution to conn
     {
 
       body: [''],
-      media: [{ type: 'video', src: '/previews/website demoreel.mp4', alt: 'Project website demoreel' }],
+      media: [
+        { type: 'video', src: '/previews/website demoreel.mp4', alt: 'Project website demoreel' },
+        { type: 'text', text: 'https://vimeo.com/user68912551', href: 'https://vimeo.com/user68912551' },
+      ],
     },
   ],
 },
@@ -326,7 +334,20 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
                 {s.media && (
   <div class="space-y-4 pt-2">
     {s.media.map((m) =>
-      m.type === 'iframe' ? (
+      m.type === 'text' ? (
+        m.href ? (
+          <a
+            href={m.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block text-sm text-gray-700 underline underline-offset-2 hover:text-gray-900"
+          >
+            {m.text ?? m.href}
+          </a>
+        ) : (
+          <p class="text-sm text-gray-800 leading-6">{m.text}</p>
+        )
+      ) : m.type === 'iframe' ? (
         <div class="space-y-3">
           <figure class="rounded-2xl bg-white overflow-hidden border border-gray-200">
             <div class="site-embed">
@@ -354,7 +375,7 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
           { 'border border-gray-200': !m.borderless },
         ]}
       >
-        {isVideoSrc(m.src, m.type) ? (
+        {m.src && isVideoSrc(m.src, m.type) ? (
           <video
             src={m.src}
             class="w-full h-auto block"
@@ -363,7 +384,7 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
           >
             Sorry, your browser doesn’t support embedded videos.
           </video>
-        ) : (
+        ) : m.src ? (
           <img
             src={m.src}
             alt={m.alt}
@@ -371,7 +392,7 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
             loading="lazy"
             decoding="async"
           />
-        )}
+        ) : null}
       </figure>
       )
     )}
