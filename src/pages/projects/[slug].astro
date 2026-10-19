@@ -1,11 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import WorkToggles from '../../components/WorkToggles.astro';
 
 // 1. 先定义类型
 type SummaryPart = { text: string; href?: string };
-type MediaItem = { type?: 'image' | 'video'; src: string; alt: string; borderless?: boolean };
+type MediaItem = {
+  type?: 'image' | 'video' | 'iframe';
+  src: string;
+  alt: string;
+  borderless?: boolean;
+};
+type ToggleMediaItem = {
+  type?: 'image' | 'video' | 'text' | 'heading';
+  src?: string;
+  alt?: string;
+  text?: string;
+  borderless?: boolean;
+};
 type Project = {
   title: string;
   meta: string;
@@ -20,147 +33,122 @@ type Project = {
   toggles?: {
     title: string;
     body?: string[];
-    media?: MediaItem[];
+    media?: ToggleMediaItem[];
   }[];
 };
 
 // 2. 定义数据对象 (放在最外层，方便函数内外都能用)
 const projects: Record<string, Project> = {
   'project-one': {
-    title: 'From Brand to Browser: A Cross-Platform Design System for NLIT in Dubai',
-    meta: '2025 – Design System',
+    title: 'CMU College of Makeup Art & Design',
+    meta: '2026 – Marketing Campaigns · Visual Design · Web Design · Social Content',
     summary: [
-      { text: 'In ' },
       {
-        text: 'The North Land Institute of Training x George Brown Polytechnic',
-        href: 'https://www.georgebrown.ca/the-north-land-institute-of-training',
-      },
-      {
-        text: ` partnership for the Dubai market, I spearheaded the brand’s visual storytelling by developing a comprehensive design suite. From the core logo and color systems to international recruitment brochures and social media templates, my work standardized the visual language to maintain credibility and aesthetic excellence throughout the institution's cross-border expansion.`,
+        text: `At CMU College of Makeup Art & Design, I create digital, print, and video content that showcases student talent, promotes programs, and supports recruitment and campus events. My work spans posters, brochures, social content, and responsive web pages, including eight page redesigns using Beaver Builder, HTML, CSS, and Claude-assisted development. Working with internal teams and external partners, I connect consistent visual communication with marketing across social, email, and web.
+Beyond creating visual assets, I support campaign planning and execution to connect prospective students with CMU’s programs, student work, and events.`,
       },
     ],
     sections: [
-      // 第一个对象：Logo
       {
-        heading: 'Logo',
+        heading: 'Brochure',
         body: [''],
-        media: [{ 
-          src: '/previews/NLIT logo.svg', 
-          alt: 'Social Media preview' 
-          },
-        { 
-      src: '/previews/NLIT Type.svg', 
-      alt: 'Logo', 
-    }, 
-    { 
-      src: '/previews/NLIT color.svg', 
-      alt: 'Logo', 
-    }, 
+        media: [
+          { src: '/previews/CMU1.webp', alt: 'CMU 1' },
+          { src: '/previews/CMU2.webp', alt: 'CMU 2' },
+          { src: '/previews/CMU3.webp', alt: 'CMU 3' },
+          { src: '/previews/CMU4.webp', alt: 'CMU 4' },
+          { src: '/previews/CMU5.webp', alt: 'CMU 5' },
+          { src: '/previews/CMU6.webp', alt: 'CMU 6' },
+          { src: '/previews/CMU7.webp', alt: 'CMU 7' },
+          { src: '/previews/CMU8.webp', alt: 'CMU 8' },
+          { src: '/previews/CMU9.webp', alt: 'CMU 9' },
         ],
       },
-     // 第二个对象：Brochure Part 1
-{
-  heading: 'Brochure',
-  body: [
-    'Latest Update:',
-    'Visual Elevation: Intentional Realism',
-    '• Before: Initial AI-generated draft focusing on composition.',
-    '• After: Optimized version using a refined AI toolset.',
-    'By fine-tuning prompts and leveraging specialized generative tools, I enhanced the realism and emotional resonance of the subject, ensuring the visual narrative feels organic and sophisticated.'
-  ],
-  media: [
-    { 
-      src: '/previews/NL4@2x.png', 
-      alt: 'Brochure preview', 
-      borderless: true 
-    }
-  ],
-},
-    
-// 新增：Brochure Part 2 (插入在 NL4 和 NL5 之间)
-{
-  heading: '', // 如果不需要重复显示标题，可以留空
-  body: [
-    'In response to the education industry\'s need for both authority and results, I built a standardized design system that maximized efficiency for international localized updates. Here is a look at the full page layouts:',
-  ],
-  media: [
-    { 
-      src: '/previews/NL5@2x.png', 
-      alt: 'Brochure back cover', 
-      borderless: true 
-    },
-    { 
-      src: '/previews/NL6@2x.png', 
-      alt: 'Brochure preview', 
-      borderless: true 
-    },
-    { 
-      src: '/previews/NL7@2x.png', 
-      alt: 'Brochure preview', 
-      borderless: true 
-    },
-    { 
-      src: '/previews/NL8@2x.png', 
-      alt: 'Brochure preview', 
-      borderless: true 
-    },
-  ],
-}, 
-      // 注意这里的逗号，这是第三个对象：Marketing
       {
-        heading: 'Marketing',
+      heading: 'Events',
         body: [''],
-        media: [{ src: '/previews/NLIT social media.png', alt: 'Social Media preview' 
-        },
-     { 
-      src: '/previews/60b6c5a1-964e-4b95-af1b-19249aca185c.png', 
-      alt: 'Staff Card', 
-      borderless: true 
-    }, 
-    { 
-      src: '/previews/Campus.png', 
-      alt: 'Staff Card', 
-      borderless: true 
-    }, 
+        media: [
+          { src: '/previews/CMU10.webp', alt: 'CMU 10' },
+          { src: '/previews/CMU Industry Talk Series.webp', alt: 'CMU Industry Talk Series' },
+          { type: 'video', src: '/previews/CMU Industry Talk.mp4', alt: 'CMU Industry Talk' },
+        ],
+      },
+      {
+        heading: 'Website',
+        body: [
+          'A landing page template for CMU, using the institution’s brand colours, Unna, and Roboto. Scroll the preview, or open it full screen.',
+        ],
+        media: [
+          {
+            type: 'iframe',
+            src: '/templates/cmu-global-ai-arts.html',
+            alt: 'CMU Global AI Arts website template',
+          },
+        ],
+      },
+      {
+      heading: 'Student Opportunities & Program Marketing',
+        body: [
+          'Connecting Students with Clients',
+          'Plan seasonal makeup events, including Christmas initiatives, that invite clients to book services with CMU students. These events showcase student talent, provide hands-on client experience, and create opportunities for freelance work.',
+          'Promoting Programs Across Digital Channels',
+          'Support program promotion through Meta and Google advertising, building on the existing agency-led campaign schedule while introducing new creative approaches and adjusting promotional priorities to highlight selected programs.',
         ],
       },
     ],
   },
   'project-two': {
-    title: 'Project Two',
-    meta: '2023 – iOS and macOS app icons',
-    summary: 'Icon explorations with an emphasis on legibility and personality at small sizes.',
+    title: 'Northern College at Pures, and NUS Branding',
+    meta: '2023–2025 Brand Design · Marketing Collateral · Digital Media',
+    summary: 'At Pures, I worked on refining the brand’s visual identity through the Pures Brand Book, establishing a more cohesive look across digital and print materials. Alongside this work, I also had the opportunity to contribute to other design projects for the company, including NUS logo design, brochure design, and branded merchandise mockups. These projects allowed me to work across different formats and explore how visual design can support each brand’s identity and communication.',
     sections: [
       {
-        heading: 'Overview',
-        body: ['Describe the brief and what you optimized for.'],
-        media: [{ src: '/previews/project-two.svg', alt: 'Project Two preview image' }],
+        heading: 'Pures Brand Book',
+        body: ['I redesigned the Pures Brand Book, refining the visual identity, colour palette, and design guidelines to create a more cohesive and consistent look across digital and print materials.'],
+        media: [
+          { src: '/previews/Pures1.webp', alt: 'Pures 1' },
+          { src: '/previews/Pures2.webp', alt: 'Pures 2' },
+          { src: '/previews/Pures3.webp', alt: 'Pures 3' },
+          { src: '/previews/Pures4.webp', alt: 'Pures 4' },
+          { src: '/previews/Pures5.webp', alt: 'Pures 5' },
+          { src: '/previews/Pures7.webp', alt: 'Pures 7' },
+          { src: '/previews/Pures6.webp', alt: 'Pures 6' },
+           ],
+      },
+      {
+        heading: 'NUS Logo Design and Brochure',
+        body: ['My work for NUS included logo design and brochure design, exploring the brand’s visual identity across different formats. Alongside the logo design, I created a brochure to present information in a clear and engaging way'],
+        media: [
+          { src: '/previews/NUS Logo.webp', alt: 'NUS Logo' },
+          { src: '/previews/NUS Tote Bag.webp', alt: 'NUS Tote Bag' },
+          { type: 'video', src: '/previews/NUS Brochure Video.mp4', alt: 'NUS Brochure Video' },
+           ],
       },
     ],
   },
   'project-four': {
     title: 'QBP International & Motex',
-    meta: '2020–2022 Visual & Website design',
-    summary: 'At QPP International, I worked across brand identity, packaging, and digital design for automotive products. My work included brake rotor and pad packaging, website development, eBay product pages, logo design, vehicle graphics, and product photography, creating a consistent brand presence across print and digital touchpoints.',
+    meta: '2020–2022 Visual & Web Development',
+    summary: 'At QPP International, I worked across brand identity, packaging, and digital design for automotive products. My work included brake rotor and pad packaging, website development(HTML, CSS and JavaScript), eBay product pages, logo design, vehicle graphics, and product photography, creating a consistent brand presence across print and digital touchpoints.',
     sections: [
       {
         heading: 'Overview',
         body: [''],
         media: [
-          { src: '/previews/QBP_Logo.png', alt: 'QBP Logo' },
+          { src: '/previews/QBP_Logo.webp', alt: 'QBP Logo' },
           { type: 'video', src: '/previews/QBP.mp4', alt: 'QBP video' },
           { type: 'video', src: '/previews/QBP Video.mp4', alt: 'QBP package video' },
-          { src: '/previews/QBP Package.png', alt: 'QBP packaging' },
-          { src: '/previews/QBP Package1.png', alt: 'QBP packaging 1' },
-          { src: '/previews/QBP Package2.png', alt: 'QBP packaging 2' },
-          { src: '/previews/QBP Package3.png', alt: 'QBP packaging 3' },
-          { src: '/previews/QBP E-Coated Rotor Poster test.png', alt: 'QBP e-coated rotor poster' },
-          { src: '/previews/QBP vehicle ads.png', alt: 'QBP vehicle ads' },
-          { src: '/previews/QBP Xmas.jpg', alt: 'QBP Christmas campaign' },
-          { src: '/previews/QBP Motex Package.png', alt: 'QBP Motex packaging' },
-          { src: '/previews/QBP Motex Label.png', alt: 'QBP Motex label' },
-          { src: '/previews/QBP Motex1.jpg', alt: 'QBP Motex 1' },
-          { src: '/previews/QBP Motex2.jpg', alt: 'QBP Motex 2' },
+          { src: '/previews/QBP Package.webp', alt: 'QBP packaging' },
+          { src: '/previews/QBP Package1.webp', alt: 'QBP packaging 1' },
+          { src: '/previews/QBP Package2.webp', alt: 'QBP packaging 2' },
+          { src: '/previews/QBP Package3.webp', alt: 'QBP packaging 3' },
+          { src: '/previews/QBP E-Coated Rotor Poster test.webp', alt: 'QBP e-coated rotor poster' },
+          { src: '/previews/QBP vehicle ads.webp', alt: 'QBP vehicle ads' },
+          { src: '/previews/QBP Xmas.webp', alt: 'QBP Christmas campaign' },
+          { src: '/previews/QBP Motex Package.webp', alt: 'QBP Motex packaging' },
+          { src: '/previews/QBP Motex Label.webp', alt: 'QBP Motex label' },
+          { src: '/previews/QBP Motex1.webp', alt: 'QBP Motex 1' },
+          { src: '/previews/QBP Motex2.webp', alt: 'QBP Motex 2' },
           { src: '/previews/QBP Motex3.png', alt: 'QBP Motex 3' },
           
         ],
@@ -169,7 +157,7 @@ const projects: Record<string, Project> = {
   },
   'project-five': {
     title: "Young People’s Theatre",
-    meta: '2018-2019 Ticket Booking Experience UX/UI Redesign',
+    meta: '2018-2019 Ticket Booking User Experience Redesign',
     summary: 'A redesign of Young People’s Theatre’s online ticket booking experience, focused on making the purchase journey clearer and easier to navigate. The project rethinks the user flow and interface to help audiences find performances, select tickets, and move through checkout with greater ease.',
     sections: [
       {
@@ -191,19 +179,61 @@ const projects: Record<string, Project> = {
   'project-six': {
     title: 'Independent Design Work',
     meta: 'Freelance Illustration, UI & Web Design · 2018–Present',
-    summary: 'As a freelance designer, I create illustrations, infographics, user interfaces, and websites for clients including T&T Supermarket, Golf Canada, and Fujifilm VisualSonics. Working with developers, I translate each client’s needs into clear, engaging visual and digital experiences..',
+    summary: 'As a freelance designer, I create illustrations, infographics, user interfaces, and websites for clients including T&T Supermarket, Golf Canada, George Brown Polytechnic and Fujifilm VisualSonics. Working with developers, I translate each client’s needs into clear, engaging visual and digital experiences.',
     sections: [],
     toggles: [
-      // Add body copy and /previews media into each toggle as work is ready
-      { title: 'Branding', body: [], media: [] },
-      { title: 'Print Design', body: [], media: [] },
-      { title: 'Digital Design', body: [], media: [] },
-      { title: 'Other Projects', body: [], media: [] },
+      {
+        title: 'Illustration / Apparel Graphic Design - Fujifilm VisualSonics',
+        body: ['FUJIFILM VisualSonics develops advanced ultrasound imaging technology for medical research. I created this design for the company’s participation in a marathon, bringing its scientific identity into a playful, energetic visual celebrating movement and team spirit.'],
+        media: [
+          { src: '/previews/Fujifilm1.webp', alt: 'Fujifilm branding 1' },
+          { src: '/previews/Fujifilm4.webp', alt: 'Fujifilm branding 2' },
+          { src: '/previews/Fujifilm3.webp', alt: 'Fujifilm branding 3' },
+          { src: '/previews/Fujifilm2.JPG', alt: 'Fujifilm branding 4' },
+        ],
+      },
+      {
+        title: 'Brand Identity Design - George Brown Polytechnic x The Northland Institute of Training',
+        body: [],
+        media: [
+          {
+            type: 'text',
+            text: 'In The North Land Institute of Training x George Brown Polytechnic partnership for the Dubai market, I spearheaded the brand’s visual storytelling by developing a comprehensive design suite. From the core logo and color systems to international recruitment brochures and social media templates, my work standardized the visual language to maintain credibility and aesthetic excellence throughout the institution\'s cross-border expansion.',
+          },
+          { type: 'heading', text: 'Logo' },
+          { src: '/previews/NLIT logo.svg', alt: 'NLIT logo' },
+          { src: '/previews/NLIT Type.svg', alt: 'NLIT type' },
+          { src: '/previews/NLIT color.svg', alt: 'NLIT color' },
+          { type: 'heading', text: 'Brochure' },
+          { type: 'text', text: 'Latest Update:' },
+          { type: 'text', text: 'Visual Elevation: Intentional Realism' },
+          { type: 'text', text: '• Before: Initial AI-generated draft focusing on composition.' },
+          { type: 'text', text: '• After: Optimized version using a refined AI toolset.' },
+          {
+            type: 'text',
+            text: 'By fine-tuning prompts and leveraging specialized generative tools, I enhanced the realism and emotional resonance of the subject, ensuring the visual narrative feels organic and sophisticated.',
+          },
+          { src: '/previews/NL4@2x.png', alt: 'Brochure preview', borderless: true },
+          {
+            type: 'text',
+            text: 'In response to the education industry\'s need for both authority and results, I built a standardized design system that maximized efficiency for international localized updates. Here is a look at the full page layouts:',
+          },
+          { src: '/previews/NL5@2x.png', alt: 'Brochure back cover', borderless: true },
+          { src: '/previews/NL6@2x.png', alt: 'Brochure preview', borderless: true },
+          { src: '/previews/NL7@2x.png', alt: 'Brochure preview', borderless: true },
+          { src: '/previews/NL8@2x.png', alt: 'Brochure preview', borderless: true },
+          { src: '/previews/60b6c5a1-964e-4b95-af1b-19249aca185c.png', alt: 'Staff Card', borderless: true },
+          { src: '/previews/Campus.png', alt: 'Staff Card', borderless: true },
+        ],
+      },
+      {
+        title: 'Coming Soon',
+      },
     ],
   },
   'project-three': {
   title: '3D Design',
-  meta: '2022 – 3D modeling surfacing and animation',
+  meta: '2022-2023  Modeling & Texture Design',
   summary: 'Driven by a commitment to lifelong learning, I spent 1 year upskilling in 3D modeling and surfacing. This is the demo reel I produced during that period. With the ability to independently execute everything from asset creation to lighting and animation, I can now offer clients enhanced value—whether it is crafting 3D icons, producing social media content, or quality-controlling AI-generated motion.',
   sections: [
     {
@@ -238,6 +268,11 @@ function escapeHtml(s: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function isVideoSrc(src: string, type?: string): boolean {
+  if (type === 'video') return true;
+  return /\.(mp4|mov|webm|ogg)(\?|$)/i.test(src);
 }
 
 function summaryPartsToHtml(parts: SummaryPart[]): string {
@@ -290,14 +325,36 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
 
                 {s.media && (
   <div class="space-y-4 pt-2">
-    {s.media.map((m) => (
+    {s.media.map((m) =>
+      m.type === 'iframe' ? (
+        <div class="space-y-3">
+          <figure class="rounded-2xl bg-white overflow-hidden border border-gray-200">
+            <div class="site-embed">
+              <iframe
+                src={m.src}
+                title={m.alt}
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin"
+              />
+            </div>
+          </figure>
+          <a
+            href={m.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs text-gray-500 hover:text-gray-900"
+          >
+            Open live template →
+          </a>
+        </div>
+      ) : (
       <figure
         class:list={[
           'rounded-2xl bg-white overflow-hidden',
           { 'border border-gray-200': !m.borderless },
         ]}
       >
-        {m.type === 'video' ? (
+        {isVideoSrc(m.src, m.type) ? (
           <video
             src={m.src}
             class="w-full h-auto block"
@@ -316,7 +373,8 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
           />
         )}
       </figure>
-    ))}
+      )
+    )}
   </div>
 )}
               </section>
@@ -330,6 +388,42 @@ function summaryPartsToHtml(parts: SummaryPart[]): string {
           <a href="/" class="text-sm underline underline-offset-4">Go home</a>
         </div>
       )}
+
+      <SiteFooter />
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  .site-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #0c0c0c;
+  }
+
+  .site-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 800px;
+    border: 0;
+    transform-origin: top left;
+  }
+</style>
+
+<script>
+  function sizeSiteEmbeds() {
+    document.querySelectorAll('.site-embed').forEach((el) => {
+      const iframe = el.querySelector('iframe');
+      if (!(el instanceof HTMLElement) || !(iframe instanceof HTMLIFrameElement)) return;
+      const scale = el.clientWidth / 1280;
+      iframe.style.transform = `scale(${scale})`;
+    });
+  }
+
+  sizeSiteEmbeds();
+  window.addEventListener('resize', sizeSiteEmbeds);
+</script>

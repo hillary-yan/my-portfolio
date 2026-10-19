@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lorem ipsum dolor & Lorem ipsum dolor sit amet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  /* CMU BRAND GUIDE COLORS
+     Black:      #414042
+     Teal Mid:   #89CED0
+     Teal Dark:  #1BA39C
+     Teal Pale:  #D4E1E3
+     Fonts:      Roboto (body) + Unna (display)
+  */
+  :root {
+    --black:      #414042;
+    --black-deep: #1a1a1a;
+    --white:      #ffffff;
+    --offwhite:   #f4f7f7;
+    --lgrey:      #dde3e3;
+    --teal-pale:  #D4E1E3;
+    --teal-mid:   #89CED0;
+    --teal-dark:  #1BA39C;
+    --teal-deep:  #158f89;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Roboto',sans-serif; font-weight:300; color:var(--black); background:var(--white); overflow-x:hidden; }
+
+  /* TOP BAR */
+  .top-bar { background:var(--teal-dark); color:#fff; text-align:center; font-size:12px; letter-spacing:.07em; padding:9px 20px; }
+  .top-bar a { color:#fff; font-weight:500; text-decoration:underline; }
+
+  /* NAV */
+  nav { position:sticky; top:0; z-index:100; background:var(--black-deep); height:68px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; box-shadow:0 2px 16px rgba(0,0,0,.3); }
+  .nav-brand { text-decoration:none; display:flex; flex-direction:column; }
+  .nav-wm { display:flex; align-items:center; }
+  .wm-c  { font-family:'Roboto',sans-serif; font-weight:300; font-size:24px; color:#fff; }
+  .wm-sp { font-size:20px; color:rgba(255,255,255,.4); margin:0 5px; font-weight:100; }
+  .wm-mu { font-family:'Unna',serif; font-weight:400; font-size:24px; color:#fff; letter-spacing:.05em; }
+  .wm-sub { font-size:8px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-top:2px; }
+  .nav-links { display:flex; gap:26px; list-style:none; align-items:center; }
+  .nav-links a { color:rgba(255,255,255,.7); text-decoration:none; font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:400; transition:color .2s; }
+  .nav-links a:hover { color:var(--teal-mid); }
+  .nav-cta { background:var(--teal-dark) !important; color:#fff !important; padding:9px 20px; font-weight:500 !important; transition:background .2s !important; }
+  .nav-cta:hover { background:var(--teal-deep) !important; }
+
+  /* HERO */
+  .hero { position:relative; background:var(--black-deep); min-height:90vh; display:flex; align-items:center; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background: radial-gradient(ellipse 80% 65% at 72% 30%, rgba(27,163,156,.2) 0%, transparent 60%), radial-gradient(ellipse 45% 55% at 8% 88%, rgba(137,206,208,.1) 0%, transparent 55%), linear-gradient(155deg,#0c0c0c 0%,#181818 55%,#0c1a1a 100%); }
+  .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(27,163,156,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(27,163,156,.05) 1px,transparent 1px); background-size:68px 68px; }
+  .glow { position:absolute; border-radius:50%; filter:blur(90px); animation:gf 12s ease-in-out infinite; }
+  .g1 { width:560px; height:380px; background:radial-gradient(ellipse,rgba(27,163,156,.22),transparent 70%); top:-80px; right:-60px; }
+  .g2 { width:300px; height:300px; background:radial-gradient(ellipse,rgba(137,206,208,.1),transparent 70%); bottom:60px; left:4%; animation-delay:5s; }
+  @keyframes gf { 0%,100%{transform:scale(1) translate(0,0);} 40%{transform:scale(1.07) translate(15px,-20px);} 75%{transform:scale(.96) translate(-10px,15px);} }
+  .hero-inner { position:relative; z-index:2; max-width:1180px; margin:0 auto; padding:80px 60px; width:100%; }
+  .eyebrow { display:inline-flex; align-items:center; gap:14px; font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--teal-mid); font-weight:400; margin-bottom:22px; animation:up .7s ease both; }
+  .eyebrow::before { content:''; width:36px; height:1px; background:var(--teal-mid); display:block; }
+  .hero h1 { font-family:'Unna',serif; font-weight:400; font-size:clamp(44px,6.5vw,88px); color:#fff; line-height:1.05; margin-bottom:10px; animation:up .7s .12s ease both; }
+  .hero h1 em { font-style:italic; color:var(--teal-mid); }
+  .hero-tag { font-family:'Unna',serif; font-style:italic; font-size:clamp(16px,2.2vw,26px); color:rgba(255,255,255,.48); margin-bottom:32px; animation:up .7s .2s ease both; }
+  .hero-desc { font-size:15px; line-height:1.8; color:rgba(255,255,255,.58); max-width:580px; margin-bottom:44px; font-weight:300; animation:up .7s .28s ease both; }
+  .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; animation:up .7s .36s ease both; }
+  .hero-stats { position:absolute; bottom:52px; right:60px; display:flex; gap:40px; animation:up .7s .5s ease both; }
+  .hs { padding-left:22px; border-left:2px solid var(--teal-dark); text-align:right; }
+  .hs-n { font-family:'Unna',serif; font-size:34px; color:var(--teal-mid); display:block; line-height:1; }
+  .hs-l { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); display:block; margin-top:5px; }
+  @keyframes up { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+  /* BUTTONS */
+  .btn-teal   { background:var(--teal-dark); color:#fff; padding:14px 32px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:500; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-teal:hover { background:var(--teal-deep); transform:translateY(-2px); box-shadow:0 8px 26px rgba(27,163,156,.35); }
+  .btn-ghost  { border:1px solid rgba(255,255,255,.28); color:#fff; padding:14px 32px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:400; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-ghost:hover { border-color:var(--teal-mid); color:var(--teal-mid); transform:translateY(-2px); }
+  .btn-solid  { background:var(--teal-dark); color:#fff; padding:13px 26px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:500; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-solid:hover { background:var(--teal-deep); transform:translateY(-2px); }
+  .btn-border { border:1px solid var(--black); color:var(--black); padding:12px 26px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:400; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-border:hover { border-color:var(--teal-dark); color:var(--teal-dark); transform:translateY(-2px); }
+  .btn-black  { background:var(--black-deep); color:#fff; padding:14px 32px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:500; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-black:hover { background:#2a2a2a; transform:translateY(-2px); }
+  .btn-oteal  { border:2px solid var(--teal-dark); color:var(--teal-dark); padding:12px 32px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:500; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-oteal:hover { background:var(--teal-dark); color:#fff; transform:translateY(-2px); }
+
+  /* LAYOUT */
+  .container { max-width:1180px; margin:0 auto; }
+  .sec-label { font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--teal-dark); font-weight:500; display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .sec-label::after { content:''; width:34px; height:1px; background:var(--teal-dark); display:block; }
+  .sec-label.inv { color:var(--teal-mid); }
+  .sec-label.inv::after { background:var(--teal-mid); }
+  .sec-label.ctr { justify-content:center; }
+  .sec-label.ctr::before { content:''; width:34px; height:1px; background:var(--teal-mid); display:block; }
+
+  /* INTRO */
+  .intro-sec { background:var(--offwhite); padding:96px 60px; }
+  .intro-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  .intro-l h2 { font-family:'Unna',serif; font-weight:400; font-size:clamp(32px,3.2vw,50px); line-height:1.12; color:var(--black-deep); margin-bottom:26px; }
+  .intro-l h2 em { font-style:italic; color:var(--teal-dark); }
+  .intro-l p  { font-size:15px; line-height:1.85; color:#555; font-weight:300; margin-bottom:16px; }
+  .cta-row { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; }
+  .focus-list { background:var(--white); border:1px solid var(--lgrey); }
+  .f-item { display:flex; align-items:flex-start; gap:14px; padding:15px 22px; border-bottom:1px solid var(--lgrey); transition:background .2s; }
+  .f-item:last-child { border-bottom:none; }
+  .f-item:hover { background:#eef5f5; }
+  .f-dot { width:7px; height:7px; background:var(--teal-dark); border-radius:50%; flex-shrink:0; margin-top:7px; }
+  .f-item span { font-size:13.5px; font-weight:400; color:var(--black); line-height:1.5; }
+
+  /* PROGRAMS OVERVIEW */
+  .prog-sec { background:var(--black-deep); padding:96px 60px; position:relative; }
+  .prog-sec::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,var(--teal-dark),var(--teal-mid),transparent); }
+  .prog-head { text-align:center; margin-bottom:60px; }
+  .prog-head h2 { font-family:'Unna',serif; font-weight:400; font-size:clamp(32px,4vw,56px); color:#fff; margin-bottom:12px; line-height:1.1; }
+  .prog-head h2 em { font-style:italic; color:var(--teal-mid); }
+  .prog-head p { font-size:14px; color:rgba(255,255,255,.48); max-width:500px; margin:0 auto; line-height:1.75; font-weight:300; }
+
+  .tier { margin-bottom:50px; }
+  .tier-head { display:flex; align-items:center; justify-content:space-between; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,.09); margin-bottom:22px; flex-wrap:wrap; gap:14px; }
+  .badge-f { background:var(--teal-dark); color:#fff; font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:500; padding:7px 16px; }
+  .badge-a { border:1px solid var(--teal-mid); color:var(--teal-mid); font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:500; padding:6px 16px; }
+  .tier-pricing { display:flex; gap:32px; }
+  .t-price .v { font-family:'Unna',serif; font-size:22px; color:var(--teal-mid); display:block; line-height:1; text-align:right; }
+  .t-price .l { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); display:block; margin-top:3px; text-align:right; }
+
+  .prog-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.07); }
+  .p-card { background:#111; padding:28px 24px 22px; position:relative; overflow:hidden; transition:background .3s; }
+  .p-card::after { content:''; position:absolute; top:0; left:0; width:0; height:3px; background:var(--teal-dark); transition:width .4s ease; }
+  .p-card:hover { background:#151f1f; }
+  .p-card:hover::after { width:100%; }
+
+  /* BRIGHTER NUMBERS - was rgba(27,163,156,0.1), now full teal-mid at 0.55 opacity */
+  .p-num { font-family:'Unna',serif; font-size:42px; color:rgba(137,206,208,0.55); line-height:1; margin-bottom:12px; display:block; transition:color .3s; }
+  .p-card:hover .p-num { color:rgba(137,206,208,0.85); }
+
+  .p-name { font-size:13.5px; font-weight:400; color:#fff; line-height:1.5; margin-bottom:12px; }
+  .p-tag  { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-mid); font-weight:400; }
+
+  /* COURSE DETAIL CARDS */
+  .details-sec { background:var(--white); padding:96px 60px; }
+  .details-sec-dark { background:var(--black-deep); padding:96px 60px; position:relative; }
+  .details-sec-dark::before { content:''; position:absolute; top:0;left:0;right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(137,206,208,.3),transparent); }
+
+  .detail-header { text-align:center; margin-bottom:56px; }
+  .detail-header h2 { font-family:'Unna',serif; font-weight:400; font-size:clamp(28px,3.5vw,48px); color:var(--black-deep); margin-bottom:10px; }
+  .detail-header h2 em { font-style:italic; color:var(--teal-dark); }
+  .detail-header-dark h2 { color:#fff; }
+  .detail-header-dark h2 em { color:var(--teal-mid); }
+  .detail-header p { font-size:14px; color:#777; max-width:480px; margin:0 auto; line-height:1.7; }
+  .detail-header-dark p { color:rgba(255,255,255,.45); }
+
+  .course-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:28px; }
+
+  /* Light section cards */
+  .c-card { background:var(--offwhite); border-left:4px solid var(--teal-dark); padding:32px 30px; transition:all .3s; }
+  .c-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(27,163,156,.12); background:var(--white); }
+
+  /* Dark section cards */
+  .c-card-dark { background:#111; border-left:4px solid var(--teal-dark); padding:32px 30px; transition:all .3s; }
+  .c-card-dark:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(27,163,156,.2); background:#161f1f; }
+
+  .c-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:6px; }
+  .c-num { font-family:'Unna',serif; font-size:13px; color:var(--teal-dark); font-weight:400; white-space:nowrap; padding-top:3px; }
+  .c-num-dark { color:var(--teal-mid); }
+  .c-card h3 { font-family:'Unna',serif; font-size:20px; font-weight:700; color:var(--black-deep); line-height:1.25; margin-bottom:6px; }
+  .c-card-dark h3 { color:#fff; }
+  .c-hours { display:inline-block; background:var(--teal-dark); color:#fff; font-size:9px; letter-spacing:.14em; text-transform:uppercase; font-weight:500; padding:4px 10px; margin-bottom:14px; }
+  .c-hours-dark { background:rgba(27,163,156,.25); color:var(--teal-mid); }
+  .c-tools { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .c-tool { background:rgba(27,163,156,.12); color:var(--teal-dark); font-size:10px; letter-spacing:.08em; font-weight:500; padding:4px 10px; border:1px solid rgba(27,163,156,.25); }
+  .c-tool-dark { background:rgba(137,206,208,.08); color:var(--teal-mid); border-color:rgba(137,206,208,.2); }
+  .c-desc { font-size:13.5px; line-height:1.75; color:#555; font-weight:300; margin-bottom:18px; }
+  .c-desc-dark { color:rgba(255,255,255,.55); }
+  .c-outcomes { list-style:none; }
+  .c-outcomes li { font-size:12.5px; color:#666; line-height:1.6; padding:5px 0 5px 18px; position:relative; border-bottom:1px solid var(--lgrey); font-weight:300; }
+  .c-outcomes-dark li { color:rgba(255,255,255,.45); border-bottom-color:rgba(255,255,255,.07); }
+  .c-outcomes li:last-child { border-bottom:none; }
+  .c-outcomes li::before { content:''; position:absolute; left:0; top:13px; width:6px; height:6px; background:var(--teal-dark); border-radius:50%; }
+  .c-outcomes-dark li::before { background:var(--teal-mid); }
+
+  /* VISION */
+  .vision-sec { background:var(--white); padding:96px 60px; }
+  .vision-wrap { max-width:1180px; margin:0 auto; display:grid; grid-template-columns:1fr 1.3fr; gap:80px; align-items:center; }
+  .vision-l h2 { font-family:'Unna',serif; font-weight:400; font-size:clamp(30px,3.2vw,48px); line-height:1.12; color:var(--black-deep); margin-bottom:24px; }
+  .vision-l h2 em { font-style:italic; color:var(--teal-dark); }
+  .vision-l p { font-size:15px; line-height:1.85; color:#555; font-weight:300; margin-bottom:16px; }
+  .v-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .v-card { background:var(--offwhite); padding:26px 22px; border-top:3px solid transparent; transition:all .3s; }
+  .v-card:hover { border-top-color:var(--teal-dark); transform:translateY(-4px); box-shadow:0 10px 30px rgba(27,163,156,.1); }
+  .v-bar { width:32px; height:3px; background:var(--teal-dark); margin-bottom:16px; transition:width .3s; }
+  .v-card:hover .v-bar { width:50px; }
+  .v-card h3 { font-size:12px; font-weight:500; color:var(--black-deep); margin-bottom:9px; text-transform:uppercase; letter-spacing:.07em; }
+  .v-card p { font-size:13px; color:#777; line-height:1.65; font-weight:300; }
+
+  /* CTA BAND */
+  .cta-band { background:var(--teal-pale); padding:80px 60px; text-align:center; position:relative; overflow:hidden; }
+  .cta-band::before { content:'C|MU'; position:absolute; font-family:'Unna',serif; font-size:240px; font-weight:700; color:rgba(27,163,156,.07); top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; }
+  .cta-inner { position:relative; z-index:1; max-width:660px; margin:0 auto; }
+  .cta-inner h2 { font-family:'Unna',serif; font-weight:400; font-size:clamp(30px,3.5vw,50px); color:var(--black-deep); margin-bottom:14px; line-height:1.15; }
+  .cta-inner p { font-size:15px; color:#444; margin-bottom:36px; line-height:1.75; font-weight:300; }
+  .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  /* FOOTER */
+  footer { background:var(--black-deep); padding:58px 60px 26px; color:rgba(255,255,255,.4); }
+  .foot-inner { max-width:1180px; margin:0 auto; }
+  .foot-top { display:grid; grid-template-columns:1.8fr 1fr 1fr; gap:56px; padding-bottom:38px; border-bottom:1px solid rgba(255,255,255,.07); margin-bottom:26px; }
+  .foot-logo { display:flex; align-items:center; margin-bottom:8px; }
+  .fl-c  { font-family:'Roboto',sans-serif; font-weight:300; font-size:20px; color:#fff; }
+  .fl-sp { font-size:17px; color:rgba(255,255,255,.3); margin:0 5px; font-weight:100; }
+  .fl-mu { font-family:'Unna',serif; font-size:20px; color:#fff; font-weight:400; letter-spacing:.05em; }
+  .foot-sub  { font-size:9px; letter-spacing:.17em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:16px; }
+  .foot-desc { font-size:13px; line-height:1.75; max-width:290px; }
+  .foot-col h4 { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--teal-mid); margin-bottom:16px; font-weight:500; }
+  .foot-col h4.mt { margin-top:22px; }
+  .foot-col ul { list-style:none; }
+  .foot-col li { margin-bottom:9px; }
+  .foot-col a { color:rgba(255,255,255,.38); text-decoration:none; font-size:13px; font-weight:300; transition:color .2s; }
+  .foot-col a:hover { color:var(--teal-mid); }
+  .foot-bottom { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:rgba(255,255,255,.2); flex-wrap:wrap; gap:10px; }
+  .foot-bottom a { color:rgba(255,255,255,.3); text-decoration:none; }
+  .foot-bottom a:hover { color:var(--teal-mid); }
+
+  /* REVEAL */
+  .rv { opacity:0; transform:translateY(26px); transition:opacity .65s ease,transform .65s ease; }
+  .rv.on { opacity:1; transform:translateY(0); }
+  .d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;}
+
+  /* RESPONSIVE */
+  @media(max-width:960px){
+    nav{padding:0 20px;} .nav-links{display:none;}
+    .hero-inner{padding:60px 24px;} .hero-stats{display:none;}
+    .intro-sec,.prog-sec,.details-sec,.details-sec-dark,.vision-sec,.cta-band{padding:64px 24px;}
+    .intro-grid,.vision-wrap{grid-template-columns:1fr;gap:44px;}
+    .prog-grid{grid-template-columns:repeat(2,1fr);}
+    .tier-pricing{display:none;}
+    .course-cards{grid-template-columns:1fr;}
+    .v-cards{grid-template-columns:1fr;}
+    footer{padding:48px 24px 22px;}
+    .foot-top{grid-template-columns:1fr;gap:30px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  Lorem ipsum dolor sit amet &nbsp;|&nbsp;
+  <a href="https://www.cmucollege.com/book-a-tour/">Lorem ipsum dolor sit</a> &nbsp;|&nbsp;
+  <a href="https://www.cmucollege.com/book-online-meeting-with-cmu-admissions/">Lorem ipsum dolor</a> &nbsp;|&nbsp; Lorem ipsum dolor
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="https://www.cmucollege.com" class="nav-brand">
+    <div class="nav-wm"><span class="wm-c">Lorem</span><span class="wm-sp">|</span><span class="wm-mu">Lorem</span></div>
+    <span class="wm-sub">Lorem ipsum dolor sit &amp; Lorem</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://www.cmucollege.com/about-cmu/">Lorem</a></li>
+    <li><a href="https://www.cmucollege.com/programs/">Lorem</a></li>
+    <li><a href="https://www.cmucollege.com/how-to-apply/">Lorem</a></li>
+    <li><a href="https://www.cmucollege.com/admissions/international/">Lorem</a></li>
+    <li><a href="https://www.cmucollege.com/blog/">Lorem</a></li>
+    <li><a href="https://www.cmucollege.com/book-a-tour/" class="nav-cta">Lorem ipsum dolor</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Lorem ipsum dolor sit amet consectetur &amp; Lorem</div>
+    <h1>Lorem ipsum dolor &amp;<br><em>Lorem ipsum</em><br>Lorem</h1>
+    <p class="hero-tag">Lorem ipsum dolor sit amet consectetur</p>
+    <p class="hero-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut.</p>
+    <div class="hero-ctas">
+      <a href="https://www.cmucollege.com/book-online-meeting-with-cmu-admissions/" class="btn-teal">Lorem ipsum dolor</a>
+      <a href="#programs" class="btn-ghost">Lorem ipsum</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hs"><span class="hs-n">Lorem</span><span class="hs-l">Lorem ipsum dolor</span></div>
+    <div class="hs"><span class="hs-n">Lorem</span><span class="hs-l">Lorem ipsum dolor</span></div>
+    <div class="hs"><span class="hs-n">Lorem</span><span class="hs-l">Lorem ipsum</span></div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro-sec">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="rv">
+        <div class="sec-label">Lorem ipsum</div>
+        <h2 class="intro-l">Lorem <em>Lorem &amp; Lorem ipsum</em> Lorem ipsum dolor sit</h2>
+        <div class="intro-l">
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut.</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex.</p>
+          <p>Lorem ipsum dolor sit amet &amp; Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation.</p>
+          <div class="cta-row">
+            <a href="https://www.cmucollege.com/book-a-tour/" class="btn-solid">Lorem ipsum dolor sit</a>
+            <a href="https://www.cmucollege.com/book-online-meeting-with-cmu-admissions/" class="btn-border">Lorem ipsum dolor</a>
+          </div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="sec-label">Lorem ipsum dolor</div>
+        <div class="focus-list">
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum dolor sit</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum &amp; Lorem ipsum</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum &amp; Lorem ipsum</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum &amp; Lorem ipsum</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum dolor</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum &amp; Lorem ipsum</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum dolor</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum dolor</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum dolor</span></div>
+          <div class="f-item"><div class="f-dot"></div><span>Lorem ipsum dolor sit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS OVERVIEW -->
+<section class="prog-sec" id="programs">
+  <div class="container">
+    <div class="prog-head rv">
+      <div class="sec-label inv ctr">Lorem ipsum</div>
+      <h2>Lorem &amp; Lorem ipsum <em>Lorem</em></h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut.</p>
+    </div>
+
+    <!-- FOUNDATION TIER -->
+    <div class="tier rv">
+      <div class="tier-head">
+        <div class="badge-f">Lorem ipsum</div>
+        <div class="tier-pricing">
+          <div class="t-price"><span class="v">Lorem ipsum</span><span class="l">Lorem ipsum</span></div>
+          <div class="t-price"><span class="v">Lorem ipsum</span><span class="l">Lorem ipsum</span></div>
+        </div>
+      </div>
+      <div class="prog-grid">
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor sit</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor sit amet consectetur</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor sit</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+      </div>
+    </div>
+
+    <!-- ADVANCED TIER -->
+    <div class="tier rv">
+      <div class="tier-head">
+        <div class="badge-a">Lorem ipsum</div>
+        <div class="tier-pricing">
+          <div class="t-price"><span class="v">Lorem ipsum</span><span class="l">Lorem ipsum</span></div>
+          <div class="t-price"><span class="v">Lorem ipsum</span><span class="l">Lorem ipsum</span></div>
+        </div>
+      </div>
+      <div class="prog-grid">
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor sit amet consectetur adipiscing</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor sit amet</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+        <div class="p-card"><span class="p-num">Lorem</span><div class="p-name">Lorem ipsum dolor sit amet consectetur</div><div class="p-tag">Lorem &middot; Lorem ipsum</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     COURSE DETAILS - FOUNDATION
+============================================= -->
+<section class="details-sec">
+  <div class="container">
+    <div class="detail-header rv">
+      <div class="sec-label ctr inv" style="color:var(--teal-dark);">
+        <span style="width:34px;height:1px;background:var(--teal-dark);display:block;"></span>
+        Lorem ipsum dolor
+        <span style="width:34px;height:1px;background:var(--teal-dark);display:block;"></span>
+      </div>
+      <h2>Lorem <em>Lorem ipsum</em></h2>
+      <p>Lorem ipsum dolor sit &nbsp;|&nbsp; Lorem ipsum dolor sit</p>
+    </div>
+
+    <div class="course-cards">
+
+      <!-- F1 -->
+      <div class="c-card rv">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor sit</h3>
+          </div>
+          <span class="c-hours">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool">Lorem</span>
+          <span class="c-tool">Lorem</span>
+        </div>
+        <p class="c-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Lorem ipsum dolor sit.</p>
+        <ul class="c-outcomes">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+        </ul>
+      </div>
+
+      <!-- F2 -->
+      <div class="c-card rv d1">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor</h3>
+          </div>
+          <span class="c-hours">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool">Lorem</span>
+        </div>
+        <p class="c-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.</p>
+        <ul class="c-outcomes">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Lorem ipsum dolor sit amet consectetur</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+        </ul>
+      </div>
+
+      <!-- F3 -->
+      <div class="c-card rv">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor sit amet consectetur</h3>
+          </div>
+          <span class="c-hours">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool">Lorem ipsum</span>
+        </div>
+        <p class="c-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+        <ul class="c-outcomes">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+        </ul>
+      </div>
+
+      <!-- F4 -->
+      <div class="c-card rv d1">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor sit</h3>
+          </div>
+          <span class="c-hours">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool">Lorem</span>
+          <span class="c-tool">Lorem ipsum dolor</span>
+        </div>
+        <p class="c-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Lorem.</p>
+        <ul class="c-outcomes">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     COURSE DETAILS - ADVANCED
+============================================= -->
+<section class="details-sec-dark">
+  <div class="container">
+    <div class="detail-header detail-header-dark rv">
+      <div class="sec-label inv ctr">Lorem ipsum dolor</div>
+      <h2 style="font-family:'Unna',serif;font-weight:400;font-size:clamp(28px,3.5vw,48px);color:#fff;margin-bottom:10px;">Lorem <em style="font-style:italic;color:var(--teal-mid);">Lorem ipsum</em></h2>
+      <p style="font-size:14px;color:rgba(255,255,255,.45);max-width:480px;margin:0 auto;line-height:1.7;">Lorem ipsum dolor sit &nbsp;|&nbsp; Lorem ipsum dolor sit</p>
+    </div>
+
+    <div class="course-cards">
+
+      <!-- A1 -->
+      <div class="c-card-dark rv">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num c-num-dark">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor sit amet consectetur adipiscing</h3>
+          </div>
+          <span class="c-hours c-hours-dark">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool c-tool-dark">Lorem ipsum</span>
+        </div>
+        <p class="c-desc c-desc-dark">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Lorem ipsum dolor.</p>
+        <ul class="c-outcomes c-outcomes-dark">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+        </ul>
+      </div>
+
+      <!-- A2 -->
+      <div class="c-card-dark rv d1">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num c-num-dark">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor</h3>
+          </div>
+          <span class="c-hours c-hours-dark">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool c-tool-dark">Lorem</span>
+          <span class="c-tool c-tool-dark">Lorem ipsum</span>
+        </div>
+        <p class="c-desc c-desc-dark">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Lorem ipsum dolor sit.</p>
+        <ul class="c-outcomes c-outcomes-dark">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+        </ul>
+      </div>
+
+      <!-- A3 -->
+      <div class="c-card-dark rv">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num c-num-dark">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor sit amet</h3>
+          </div>
+          <span class="c-hours c-hours-dark">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool c-tool-dark">Lorem</span>
+          <span class="c-tool c-tool-dark">Lorem ipsum</span>
+        </div>
+        <p class="c-desc c-desc-dark">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod.</p>
+        <ul class="c-outcomes c-outcomes-dark">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+        </ul>
+      </div>
+
+      <!-- A4 -->
+      <div class="c-card-dark rv d1">
+        <div class="c-card-top">
+          <div>
+            <span class="c-num c-num-dark">Lorem ipsum</span>
+            <h3>Lorem ipsum dolor sit amet consectetur</h3>
+          </div>
+          <span class="c-hours c-hours-dark">Lorem ipsum</span>
+        </div>
+        <div class="c-tools">
+          <span class="c-tool c-tool-dark">Lorem ipsum dolor</span>
+          <span class="c-tool c-tool-dark">Lorem ipsum</span>
+        </div>
+        <p class="c-desc c-desc-dark">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Lorem ipsum.</p>
+        <ul class="c-outcomes c-outcomes-dark">
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Lorem ipsum dolor sit amet consectetur</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision-sec">
+  <div class="vision-wrap">
+    <div class="rv">
+      <div class="sec-label">Lorem ipsum</div>
+      <div class="vision-l">
+        <h2>Lorem ipsum <em>Lorem ipsum</em> Lorem</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis.</p>
+        <div style="margin-top:22px;"><a href="https://www.cmucollege.com/book-a-tour/" class="btn-solid">Lorem ipsum dolor</a></div>
+      </div>
+    </div>
+    <div class="v-cards rv d2">
+      <div class="v-card"><div class="v-bar"></div><h3>Lorem ipsum</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim.</p></div>
+      <div class="v-card"><div class="v-bar"></div><h3>Lorem ipsum</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna.</p></div>
+      <div class="v-card"><div class="v-bar"></div><h3>Lorem ipsum</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+      <div class="v-card"><div class="v-bar"></div><h3>Lorem ipsum</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="cta-inner">
+    <h2>Lorem ipsum dolor sit amet consectetur</h2>
+    <p>Lorem ipsum dolor sit amet consectetur &amp; Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad.</p>
+    <div class="cta-btns">
+      <a href="https://www.cmucollege.com/book-a-tour/" class="btn-black">Lorem ipsum dolor sit</a>
+      <a href="https://www.cmucollege.com/book-online-meeting-with-cmu-admissions/" class="btn-oteal">Lorem ipsum dolor</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo"><span class="fl-c">Lorem</span><span class="fl-sp">|</span><span class="fl-mu">Lorem</span></div>
+        <div class="foot-sub">Lorem ipsum dolor sit &amp; Lorem</div>
+        <p class="foot-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Lorem ipsum dolor</h4>
+        <ul>
+          <li><a href="#">Lorem ipsum dolor sit</a></li>
+          <li><a href="#">Lorem ipsum dolor</a></li>
+          <li><a href="#">Lorem ipsum dolor sit amet consectetur</a></li>
+          <li><a href="#">Lorem ipsum dolor sit</a></li>
+          <li><a href="#">Lorem ipsum dolor &amp; Lorem ipsum dolor</a></li>
+          <li><a href="#">Lorem ipsum dolor</a></li>
+          <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+          <li><a href="#">Lorem ipsum &amp; Lorem ipsum</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Lorem</h4>
+        <ul>
+          <li><a href="https://www.cmucollege.com/book-a-tour/">Lorem ipsum dolor sit</a></li>
+          <li><a href="https://www.cmucollege.com/book-online-meeting-with-cmu-admissions/">Lorem ipsum dolor</a></li>
+          <li><a href="https://www.cmucollege.com/how-to-apply/">Lorem ipsum dolor</a></li>
+          <li><a href="https://www.cmucollege.com/financial-assistance/">Lorem ipsum</a></li>
+          <li><a href="https://www.cmucollege.com/cmu-scholarships/">Lorem</a></li>
+        </ul>
+        <h4 class="mt">Lorem</h4>
+        <ul>
+          <li><a href="tel:6476990264">Lorem ipsum dolor sit</a></li>
+          <li><a href="tel:4169686739">Lorem ipsum dolor sit</a></li>
+          <li><a href="mailto:info@cmucollege.com">Lorem ipsum dolor</a></li>
+          <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; Lorem ipsum dolor sit amet consectetur &amp; Lorem ipsum dolor sit.</span>
+      <span><a href="https://www.cmucollege.com/privacy-policy/">Lorem ipsum</a> &nbsp;|&nbsp; <a href="https://www.cmucollege.com/site-map/">Lorem ipsum</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

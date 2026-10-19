@@ -1,8 +1,9 @@
 ---
 type ToggleMedia = {
-  type?: 'image' | 'video';
-  src: string;
-  alt: string;
+  type?: 'image' | 'video' | 'text' | 'heading';
+  src?: string;
+  alt?: string;
+  text?: string;
   borderless?: boolean;
 };
 
@@ -17,11 +18,16 @@ interface Props {
 }
 
 const { toggles } = Astro.props;
+
+function isVideoSrc(src: string | undefined, type?: string): boolean {
+  if (type === 'video') return true;
+  return !!src && /\.(mp4|mov|webm|ogg)(\?|$)/i.test(src);
+}
 ---
 
 <div class="mt-10 space-y-0">
   {toggles.map((t) => {
-    const paragraphs = (t.body ?? []).filter((p) => p.trim().length > 0);
+    const paragraphs = t.body && t.body.length > 0 ? t.body : [''];
     const media = t.media ?? [];
 
     return (
@@ -40,7 +46,7 @@ const { toggles } = Astro.props;
         </summary>
 
         <div class="pl-6 pb-4 space-y-4">
-          {paragraphs.length > 0 && (
+          {paragraphs.some((p) => p.trim().length > 0) && (
             <div class="space-y-3">
               {paragraphs.map((p) => (
                 <p class="text-sm text-gray-800 leading-6">{p}</p>
@@ -48,32 +54,42 @@ const { toggles } = Astro.props;
             </div>
           )}
 
-          {media.length > 0 && (
-            <div class="space-y-4 pt-1">
-              {media.map((m) => (
+          <div class="space-y-4 pt-1">
+            {(media.length > 0 ? media : [{ src: '', alt: `${t.title} work` }]).map((m) =>
+              m.type === 'heading' ? (
+                m.text ? (
+                  <h2 class="text-xs tracking-[0.18em] uppercase text-gray-500">{m.text}</h2>
+                ) : null
+              ) : m.type === 'text' ? (
+                <p class="text-sm text-gray-800 leading-6">{m.text}</p>
+              ) : (
                 <figure
                   class:list={[
                     'rounded-2xl bg-white overflow-hidden',
                     { 'border border-gray-200': !m.borderless },
                   ]}
                 >
-                  {m.type === 'video' ? (
-                    <video src={m.src} class="w-full h-auto block" controls preload="metadata">
-                      Sorry, your browser doesn’t support embedded videos.
-                    </video>
+                  {m.src ? (
+                    isVideoSrc(m.src, m.type) ? (
+                      <video src={m.src} class="w-full h-auto block" controls preload="metadata">
+                        Sorry, your browser doesn’t support embedded videos.
+                      </video>
+                    ) : (
+                      <img
+                        src={m.src}
+                        alt={m.alt ?? ''}
+                        class="w-full h-auto block"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )
                   ) : (
-                    <img
-                      src={m.src}
-                      alt={m.alt}
-                      class="w-full h-auto block"
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <div class="w-full min-h-[12rem] bg-white" aria-hidden="true" />
                   )}
                 </figure>
-              ))}
-            </div>
-          )}
+              ),
+            )}
+          </div>
         </div>
       </details>
     );

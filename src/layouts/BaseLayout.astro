@@ -26,7 +26,7 @@ const { title, description = 'Designer Portfolio', showNav = true } = Astro.prop
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-[#f8f7f1] text-gray-900 antialiased">
+  <body id="top" class="min-h-screen bg-[#f8f7f1] text-gray-900 antialiased">
     {showNav && <Navigation />}
     <main>
       <slot />
