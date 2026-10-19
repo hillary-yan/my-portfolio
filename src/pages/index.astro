@@ -110,32 +110,45 @@ const projects = [
 <script>
   const previewWrap = document.getElementById('hover-preview');
   const previewInner = document.getElementById('hover-preview-inner');
-  const previewVideo = document.getElementById('project-preview-video');
   const list = document.getElementById('projects');
 
   const getMaxHeight = () => (typeof window !== 'undefined' ? window.innerHeight - 48 : 600);
+  const warmers = new Map();
 
-  function sizePreviewToVideo(scale = 1) {
-    const v = previewVideo;
-    const w = v.videoWidth;
-    const h = v.videoHeight;
+  function getWarmer(src) {
+    let video = warmers.get(src);
+    if (video) return video;
+    video = document.createElement('video');
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.src = src;
+    video.className = 'block w-full h-full object-contain bg-white';
+    warmers.set(src, video);
+    return video;
+  }
+
+  function sizePreviewToVideo(video, scale = 1) {
+    const w = video.videoWidth;
+    const h = video.videoHeight;
     if (!w || !h || !previewInner) return;
-    // Preview starts at listWrap.right + 32px; leave 24px viewport padding on right
     const listWrap = list.parentElement;
     const listRight = listWrap ? listWrap.getBoundingClientRect().right : 0;
     const availableW = Math.max(120, window.innerWidth - listRight - 32 - 24);
     const maxW = Math.min(480, availableW);
     const maxH = getMaxHeight();
     const aspect = w / h;
-    // Largest size that fits maxW/maxH and keeps video aspect ratio
     const width = Math.min(maxW, maxH * aspect) * scale;
     const height = width / aspect;
     previewInner.style.width = `${Math.round(width)}px`;
     previewInner.style.height = `${Math.round(height)}px`;
   }
 
-  if (previewWrap && previewInner && previewVideo && list) {
+  if (previewWrap && previewInner && list) {
     const links = list.querySelectorAll('a[data-preview-src]');
+    const sources = [...links].map((el) => el.getAttribute('data-preview-src')).filter(Boolean);
 
     const show = () => {
       previewWrap.classList.remove('opacity-0', 'scale-95');
@@ -145,28 +158,26 @@ const projects = [
     const hide = () => {
       previewWrap.classList.add('opacity-0', 'scale-95');
       previewWrap.classList.remove('opacity-100', 'scale-100');
-      previewVideo.src = '';
-      previewVideo.pause();
-      previewInner.removeAttribute('style');
+      previewInner.querySelector('video')?.pause();
     };
 
     const setPreviewFrom = (el) => {
       const src = el.getAttribute('data-preview-src');
       const scale = Number(el.getAttribute('data-preview-scale') || '1');
       if (!src) return;
-      previewVideo.src = src;
-      previewVideo.load();
-      previewVideo.onloadedmetadata = () => {
-        sizePreviewToVideo(scale);
-        show();
-      };
-      // If metadata already cached, size immediately
-      if (previewVideo.readyState >= 1) {
-        sizePreviewToVideo(scale);
-        show();
+      const video = getWarmer(src);
+      if (video.parentElement !== previewInner) previewInner.replaceChildren(video);
+      if (video.videoWidth) sizePreviewToVideo(video, scale);
+      else {
+        previewInner.style.width = '420px';
+        previewInner.style.height = '236px';
+        video.addEventListener('loadedmetadata', () => sizePreviewToVideo(video, scale), { once: true });
       }
-      previewVideo.play().catch(() => {});
+      show();
+      video.play().catch(() => {});
     };
+
+    sources.forEach((src) => getWarmer(src));
 
     links.forEach((el) => {
       el.addEventListener('mouseenter', () => setPreviewFrom(el));
